@@ -5,8 +5,10 @@ from bbi.gates.engine import apply_hard_gates
 
 
 def test_golden_gate_rejects_unconfirmed_inference(root):  # type: ignore[no-untyped-def]
-    scenario = load_scenario(root / "data/scenarios/golden/golden_record_store_weekend_v1.yaml")
-    results = {item.memory_id: item for item in apply_hard_gates(scenario.conversation).results}
+    scenario = load_scenario(root / "data/scenarios/dev_v1/golden_record_store_weekend_v1.yaml")
+    results = {
+        item.memory_id: item for item in apply_hard_gates(scenario.to_conversation_input()).results
+    }
     assert results["mem_introvert_inference"].reason_codes == ["unconfirmed_inference"]
     assert results["mem_record_store_exam_week"].direct_use_allowed is True
 
@@ -25,27 +27,28 @@ def test_golden_gate_rejects_unconfirmed_inference(root):  # type: ignore[no-unt
     ],
 )
 def test_each_gate_reason(root, mutation, reason):  # type: ignore[no-untyped-def]
-    scenario = load_scenario(root / "data/scenarios/golden/golden_record_store_weekend_v1.yaml")
-    card = scenario.conversation.candidate_memories[0].model_copy(update=mutation)
-    context = scenario.conversation.model_copy(update={"candidate_memories": [card]})
+    scenario = load_scenario(root / "data/scenarios/dev_v1/golden_record_store_weekend_v1.yaml")
+    card = scenario.candidate_memories[0].model_copy(update=mutation)
+    context = scenario.to_conversation_input().model_copy(update={"candidate_memories": [card]})
     result = apply_hard_gates(context).results[0]
     assert reason in result.reason_codes
     assert result.rejected
 
 
 def test_permission_only_never_allows_direct_use(root):  # type: ignore[no-untyped-def]
-    scenario = load_scenario(root / "data/scenarios/golden/golden_sensitive_invited_v1.yaml")
-    result = apply_hard_gates(scenario.conversation).results[0]
+    scenario = load_scenario(root / "data/scenarios/dev_v1/golden_sensitive_invited_v1.yaml")
+    result = apply_hard_gates(scenario.to_conversation_input()).results[0]
     assert result.permission_only
     assert not result.direct_use_allowed
     assert result.sanitized_topic == "a previously shared family topic"
 
 
 def test_gate_order_does_not_change_outcome(root):  # type: ignore[no-untyped-def]
-    scenario = load_scenario(root / "data/scenarios/golden/golden_record_store_weekend_v1.yaml")
-    forward = apply_hard_gates(scenario.conversation)
-    reverse_context = scenario.conversation.model_copy(
-        update={"candidate_memories": list(reversed(scenario.conversation.candidate_memories))}
+    scenario = load_scenario(root / "data/scenarios/dev_v1/golden_record_store_weekend_v1.yaml")
+    context = scenario.to_conversation_input()
+    forward = apply_hard_gates(context)
+    reverse_context = context.model_copy(
+        update={"candidate_memories": list(reversed(scenario.candidate_memories))}
     )
     reverse = apply_hard_gates(reverse_context)
     assert {item.memory_id: item.reason_codes for item in forward.results} == {

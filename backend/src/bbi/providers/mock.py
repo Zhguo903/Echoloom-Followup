@@ -18,6 +18,9 @@ class RuleBasedMockProvider:
 
     name = "mock"
 
+    def __init__(self) -> None:
+        self.serialized_requests: list[str] = []
+
     async def complete_text(self, messages: list[ChatMessage], **kwargs: Any) -> ProviderResult:
         return await self.complete_structured(messages, schema={}, **kwargs)
 
@@ -34,6 +37,13 @@ class RuleBasedMockProvider:
         metadata: dict[str, str],
     ) -> ProviderResult:
         started = time.perf_counter()
+        self.serialized_requests.append(
+            json.dumps(
+                [message.model_dump(mode="json") for message in messages],
+                ensure_ascii=False,
+                sort_keys=True,
+            )
+        )
         payload = json.loads(messages[-1].content)
         operation = metadata.get("operation", "generate")
         if operation == "deliberate":

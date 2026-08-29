@@ -26,6 +26,7 @@ from bbi.prompts.hashing import hash_prompt_files
 from bbi.prompts.loader import PromptLoader, repo_root
 from bbi.providers.base import ChatMessage, LLMProvider
 from bbi.retrieval.local_tfidf import rank_memories
+from bbi.validation.label_leakage import assert_model_payload_safe
 from bbi.validation.response_validator import validate_response
 
 
@@ -49,6 +50,7 @@ def _json_hash(value: Any) -> str:
 
 
 def _message(payload: dict[str, Any], system: str) -> list[ChatMessage]:
+    assert_model_payload_safe(payload)
     return [
         ChatMessage(role="system", content=system),
         ChatMessage(role="user", content=json.dumps(payload, ensure_ascii=False, sort_keys=True)),
@@ -102,7 +104,7 @@ async def run_method(
     options: PipelineOptions | None = None,
 ) -> RunRecord:
     options = options or PipelineOptions()
-    context = scenario.conversation
+    context = scenario.to_conversation_input()
     stage = StageLatency()
     started = time.perf_counter()
     gates = apply_hard_gates(context)
@@ -326,7 +328,7 @@ async def run_method(
             "output": generated_result.output_tokens or 0,
         },
         schema_valid=generated_result.schema_valid,
-        input_hash=_json_hash(context.model_dump(mode="json")),
+        input_hash=_json_hash(scenario.to_model_input_view()),
         output_hash=_json_hash(generated.model_dump(mode="json")),
         generator_request_json=serialized_generator,
         software_commit_hash=commit,

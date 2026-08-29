@@ -17,9 +17,9 @@ export function ScenarioExplorer() {
       data.filter(
         (scenario) =>
           filter === 'all' ||
-          scenario.set === filter ||
+          scenario.set_name === filter ||
           scenario.tags.includes(filter) ||
-          scenario.conversation.candidate_memories.some(
+          scenario.candidate_memories.some(
             (memory) => memory.sensitivity === filter || memory.memory_type === filter,
           ),
       ),
@@ -39,17 +39,23 @@ export function ScenarioExplorer() {
         <span className="synthetic-badge">◇ {t.synthetic}</span>
       </div>
       <div className="filter-row" role="group" aria-label="Scenario filters">
-        {['all', 'golden', 'core', 'high', 'episodic_experience', 'wrong_branch_use'].map(
-          (item) => (
-            <button
-              className={filter === item ? 'active' : ''}
-              key={item}
-              onClick={() => setFilter(item)}
-            >
-              {item.replaceAll('_', ' ')}
-            </button>
-          ),
-        )}
+        {[
+          'all',
+          'dev_v1',
+          'development_golden',
+          'development_core',
+          'high',
+          'episodic_experience',
+          'wrong_branch_use',
+        ].map((item) => (
+          <button
+            className={filter === item ? 'active' : ''}
+            key={item}
+            onClick={() => setFilter(item)}
+          >
+            {item.replaceAll('_', ' ')}
+          </button>
+        ))}
       </div>
       {isLoading && <div className="empty">Loading synthetic scenarios…</div>}
       {error && (
@@ -63,7 +69,7 @@ export function ScenarioExplorer() {
             <div className="tile-index">{String(index + 1).padStart(2, '0')}</div>
             <div>
               <span className="eyebrow">
-                {scenario.set} · {scenario.family_id.replaceAll('_', ' ')}
+                {scenario.set_name} · {scenario.family_id.replaceAll('_', ' ')}
               </span>
               <h2>{scenario.title}</h2>
               <p>“{scenario.conversation.current_message}”</p>

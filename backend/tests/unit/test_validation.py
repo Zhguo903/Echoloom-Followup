@@ -6,14 +6,14 @@ from bbi.validation.response_validator import validate_response
 
 
 def test_validator_reports_leakage_mechanism_identity_script_and_length(root):  # type: ignore[no-untyped-def]
-    scenario = load_scenario(root / "data/scenarios/golden/golden_record_store_weekend_v1.yaml")
+    scenario = load_scenario(root / "data/scenarios/dev_v1/golden_record_store_weekend_v1.yaml")
     output = GeneratorOutput(
         reply="CANARY_FAMILY_7Q9 memory ranking says you are an introvert <script>bad</script> "
         + "x" * 1300,
         used_memory_ids=["not_admitted"],
         explicit_memory_ids=["a", "b"],
     )
-    issues = validate_response(output, [], scenario.conversation.candidate_memories)
+    issues = validate_response(output, [], scenario.candidate_memories)
     codes = {issue.code for issue in issues}
     assert {
         "rejected_memory_leakage",

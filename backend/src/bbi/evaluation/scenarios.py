@@ -6,6 +6,7 @@ from pydantic import ValidationError
 
 from bbi.domain.enums import MemoryType, Sensitivity
 from bbi.domain.scenarios import Scenario
+from bbi.validation.label_leakage import find_forbidden_model_label_keys
 
 PII_PATTERNS = [
     re.compile(r"\b[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}\b"),
@@ -46,8 +47,15 @@ def lint_scenarios(paths: list[Path]) -> list[str]:
         if scenario.scenario_id in seen_scenarios:
             errors.append(f"duplicate scenario_id: {scenario.scenario_id}")
         seen_scenarios.add(scenario.scenario_id)
-        card_ids = {card.memory_id for card in scenario.conversation.candidate_memories}
-        for card in scenario.conversation.candidate_memories:
+        card_id_list = [card.memory_id for card in scenario.candidate_memories]
+        card_ids = set(card_id_list)
+        if len(card_id_list) != len(card_ids):
+            errors.append(f"duplicate candidate memory_id within scenario: {scenario.scenario_id}")
+        if scenario.schema_version != 2:
+            errors.append(f"scenario is not canonical v2: {scenario.scenario_id}")
+        if scenario.status == "draft" and scenario.review.reviewed_by:
+            errors.append(f"draft has reviewers recorded: {scenario.scenario_id}")
+        for card in scenario.candidate_memories:
             if (
                 card.memory_id in seen_memories
                 and seen_memories[card.memory_id] != scenario.family_id
@@ -70,22 +78,38 @@ def lint_scenarios(paths: list[Path]) -> list[str]:
             for pattern in PII_PATTERNS:
                 if pattern.search(card.content):
                     errors.append(f"possible PII in {card.memory_id}")
-        for memory_id, actions in scenario.gold.acceptable_actions.items():
+        expectations = scenario.author_expectations
+        if expectations.focal_memory_id and expectations.focal_memory_id not in card_ids:
+            errors.append(
+                f"focal author expectation references unknown memory: {expectations.focal_memory_id}"
+            )
+        for memory_id in scenario.study_a.target_memory_ids:
             if memory_id not in card_ids:
-                errors.append(f"gold references unknown memory: {memory_id}")
+                errors.append(f"Study A target references unknown memory: {memory_id}")
+        for memory_id, actions in expectations.acceptable_actions_by_memory.items():
+            if memory_id not in card_ids:
+                errors.append(f"author expectation references unknown memory: {memory_id}")
             if not actions:
                 errors.append(f"empty acceptable action set: {memory_id}")
         for memory_id in (
-            scenario.gold.beneficial_memory_ids + scenario.gold.harmful_or_forbidden_memory_ids
+            expectations.beneficial_memory_ids + expectations.harmful_or_forbidden_memory_ids
         ):
             if memory_id not in card_ids:
-                errors.append(f"gold list references unknown memory: {memory_id}")
-        for memory_id, canary in scenario.gold.canary_terms.items():
+                errors.append(f"author expectation list references unknown memory: {memory_id}")
+        for memory_id, canary in expectations.canary_terms.items():
             if memory_id not in card_ids:
                 errors.append(f"canary references unknown memory: {memory_id}")
             if canary in seen_canaries:
                 errors.append(f"duplicate canary: {canary}")
             seen_canaries.add(canary)
+        participant_view = scenario.to_participant_view(study="study_a")
+        participant_findings = find_forbidden_model_label_keys(participant_view)
+        if participant_findings:
+            errors.append(f"participant view contains research label keys: {scenario.scenario_id}")
+        participant_text = str(participant_view)
+        for canary in expectations.canary_terms.values():
+            if canary in participant_text:
+                errors.append(f"canary appears in participant-safe view: {scenario.scenario_id}")
     return errors
 
 
@@ -94,10 +118,14 @@ def coverage_matrix(scenarios: list[Scenario]) -> dict[str, list[str]]:
         {
             card.memory_type.value
             for scenario in scenarios
-            for card in scenario.conversation.candidate_memories
+            for card in scenario.candidate_memories
         }
     )
     failures = sorted(
-        {tag for scenario in scenarios for tag in scenario.gold.expected_failure_tags}
+        {
+            tag
+            for scenario in scenarios
+            for tag in scenario.author_expectations.expected_failure_tags
+        }
     )
     return {"memory_types": memory_types, "failure_modes": failures}

@@ -755,6 +755,87 @@
         ],
         "title": "AdmittedMemoryView"
       },
+      "AuthorExpectations": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "const": "provisional_design_hypothesis",
+            "title": "Status",
+            "default": "provisional_design_hypothesis"
+          },
+          "focal_memory_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Focal Memory Id"
+          },
+          "beneficial_memory_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Beneficial Memory Ids"
+          },
+          "harmful_or_forbidden_memory_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Harmful Or Forbidden Memory Ids"
+          },
+          "acceptable_actions_by_memory": {
+            "additionalProperties": {
+              "items": {
+                "$ref": "#/components/schemas/PublicAction"
+              },
+              "type": "array"
+            },
+            "type": "object",
+            "title": "Acceptable Actions By Memory"
+          },
+          "required_qualifiers": {
+            "additionalProperties": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "type": "object",
+            "title": "Required Qualifiers"
+          },
+          "expected_failure_tags": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Expected Failure Tags"
+          },
+          "canary_terms": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object",
+            "title": "Canary Terms"
+          },
+          "rationale": {
+            "type": "string",
+            "title": "Rationale",
+            "default": "Provisional synthetic design hypothesis; not a human judgment."
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "acceptable_actions_by_memory"
+        ],
+        "title": "AuthorExpectations",
+        "description": "Provisional researcher hypotheses, never participant or model truth."
+      },
       "CallbackEvent": {
         "properties": {
           "memory_id": {
@@ -853,65 +934,6 @@
           "action"
         ],
         "title": "ControllerDecision"
-      },
-      "ConversationInput": {
-        "properties": {
-          "conversation_id": {
-            "type": "string",
-            "title": "Conversation Id"
-          },
-          "owner_id": {
-            "type": "string",
-            "title": "Owner Id"
-          },
-          "character_id": {
-            "type": "string",
-            "title": "Character Id"
-          },
-          "active_branch": {
-            "type": "string",
-            "title": "Active Branch",
-            "default": "main"
-          },
-          "current_message": {
-            "type": "string",
-            "maxLength": 8000,
-            "minLength": 1,
-            "title": "Current Message"
-          },
-          "recent_turns": {
-            "items": {
-              "$ref": "#/components/schemas/DialogueTurn"
-            },
-            "type": "array",
-            "maxItems": 20,
-            "title": "Recent Turns"
-          },
-          "callback_history": {
-            "items": {
-              "$ref": "#/components/schemas/CallbackEvent"
-            },
-            "type": "array",
-            "title": "Callback History"
-          },
-          "candidate_memories": {
-            "items": {
-              "$ref": "#/components/schemas/MemoryCard"
-            },
-            "type": "array",
-            "maxItems": 20,
-            "title": "Candidate Memories"
-          }
-        },
-        "additionalProperties": false,
-        "type": "object",
-        "required": [
-          "conversation_id",
-          "owner_id",
-          "character_id",
-          "current_message"
-        ],
-        "title": "ConversationInput"
       },
       "CurrentnessState": {
         "type": "string",
@@ -1118,63 +1140,6 @@
           "rejected"
         ],
         "title": "GateResult"
-      },
-      "GoldAnnotations": {
-        "properties": {
-          "beneficial_memory_ids": {
-            "items": {
-              "type": "string"
-            },
-            "type": "array",
-            "title": "Beneficial Memory Ids"
-          },
-          "harmful_or_forbidden_memory_ids": {
-            "items": {
-              "type": "string"
-            },
-            "type": "array",
-            "title": "Harmful Or Forbidden Memory Ids"
-          },
-          "acceptable_actions": {
-            "additionalProperties": {
-              "items": {
-                "$ref": "#/components/schemas/PublicAction"
-              },
-              "type": "array"
-            },
-            "type": "object",
-            "title": "Acceptable Actions"
-          },
-          "required_qualifiers": {
-            "additionalProperties": {
-              "items": {
-                "type": "string"
-              },
-              "type": "array"
-            },
-            "type": "object",
-            "title": "Required Qualifiers"
-          },
-          "expected_failure_tags": {
-            "items": {
-              "type": "string"
-            },
-            "type": "array",
-            "title": "Expected Failure Tags"
-          },
-          "canary_terms": {
-            "additionalProperties": {
-              "type": "string"
-            },
-            "type": "object",
-            "title": "Canary Terms"
-          }
-        },
-        "type": "object",
-        "required": [
-          "acceptable_actions"
-        ],
-        "title": "GoldAnnotations"
       },
       "HTTPValidationError": {
         "properties": {
@@ -1430,6 +1395,7 @@
             "title": "Description"
           }
         },
+        "additionalProperties": false,
         "type": "object",
         "required": [
           "profile_id",
@@ -1711,8 +1677,9 @@
         "properties": {
           "schema_version": {
             "type": "integer",
+            "const": 2,
             "title": "Schema Version",
-            "default": 1
+            "default": 2
           },
           "scenario_id": {
             "type": "string",
@@ -1736,10 +1703,33 @@
             "title": "Language",
             "default": "en"
           },
-          "set": {
+          "set_name": {
             "type": "string",
-            "title": "Set",
-            "default": "core"
+            "title": "Set Name"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "draft",
+              "reviewed",
+              "frozen"
+            ],
+            "title": "Status",
+            "default": "draft"
+          },
+          "domain": {
+            "type": "string",
+            "title": "Domain"
+          },
+          "focal_action_profile": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/PublicAction"
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "tags": {
             "items": {
@@ -1752,10 +1742,38 @@
             "$ref": "#/components/schemas/ParticipantProfile"
           },
           "conversation": {
-            "$ref": "#/components/schemas/ConversationInput"
+            "$ref": "#/components/schemas/ScenarioConversation"
           },
-          "gold": {
-            "$ref": "#/components/schemas/GoldAnnotations"
+          "candidate_memories": {
+            "items": {
+              "$ref": "#/components/schemas/MemoryCard"
+            },
+            "type": "array",
+            "maxItems": 20,
+            "minItems": 1,
+            "title": "Candidate Memories"
+          },
+          "study_a": {
+            "$ref": "#/components/schemas/StudyAScenarioMetadata"
+          },
+          "study_b": {
+            "$ref": "#/components/schemas/StudyBScenarioMetadata"
+          },
+          "author_expectations": {
+            "$ref": "#/components/schemas/AuthorExpectations"
+          },
+          "review": {
+            "$ref": "#/components/schemas/ScenarioReviewMetadata"
+          },
+          "separation_stress": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SeparationStressMetadata"
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "notes": {
             "$ref": "#/components/schemas/ScenarioNotes"
@@ -1768,11 +1786,68 @@
           "family_id",
           "version",
           "title",
+          "set_name",
+          "domain",
           "participant_profile",
           "conversation",
-          "gold"
+          "candidate_memories",
+          "author_expectations",
+          "review"
         ],
-        "title": "Scenario"
+        "title": "Scenario",
+        "description": "Canonical scenario v2 model with a compatibility loader for v1 files."
+      },
+      "ScenarioConversation": {
+        "properties": {
+          "conversation_id": {
+            "type": "string",
+            "title": "Conversation Id"
+          },
+          "owner_id": {
+            "type": "string",
+            "title": "Owner Id"
+          },
+          "character_id": {
+            "type": "string",
+            "title": "Character Id"
+          },
+          "active_branch": {
+            "type": "string",
+            "title": "Active Branch",
+            "default": "main"
+          },
+          "current_message": {
+            "type": "string",
+            "maxLength": 8000,
+            "minLength": 1,
+            "title": "Current Message"
+          },
+          "recent_turns": {
+            "items": {
+              "$ref": "#/components/schemas/DialogueTurn"
+            },
+            "type": "array",
+            "maxItems": 20,
+            "title": "Recent Turns"
+          },
+          "callback_history": {
+            "items": {
+              "$ref": "#/components/schemas/CallbackEvent"
+            },
+            "type": "array",
+            "title": "Callback History"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "conversation_id",
+          "owner_id",
+          "character_id",
+          "current_message"
+        ],
+        "title": "ScenarioConversation",
+        "description": "Conversation fields stored in schema v2, without duplicated candidate cards."
       },
       "ScenarioNotes": {
         "properties": {
@@ -1787,8 +1862,55 @@
             "default": ""
           }
         },
+        "additionalProperties": false,
         "type": "object",
         "title": "ScenarioNotes"
+      },
+      "ScenarioReviewMetadata": {
+        "properties": {
+          "generated_by": {
+            "type": "string",
+            "title": "Generated By"
+          },
+          "content_review_status": {
+            "type": "string",
+            "enum": [
+              "needs_human_review",
+              "human_reviewed"
+            ],
+            "title": "Content Review Status",
+            "default": "needs_human_review"
+          },
+          "research_review_status": {
+            "type": "string",
+            "enum": [
+              "needs_human_review",
+              "human_reviewed"
+            ],
+            "title": "Research Review Status",
+            "default": "needs_human_review"
+          },
+          "reviewed_by": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Reviewed By"
+          },
+          "review_notes": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Review Notes"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "generated_by"
+        ],
+        "title": "ScenarioReviewMetadata"
       },
       "ScopeQualifier": {
         "properties": {
@@ -1840,6 +1962,71 @@
         ],
         "title": "Sensitivity"
       },
+      "SeparationStressMetadata": {
+        "properties": {
+          "category": {
+            "type": "string",
+            "title": "Category"
+          },
+          "rejected_memory_id": {
+            "type": "string",
+            "title": "Rejected Memory Id"
+          },
+          "exact_canary": {
+            "type": "string",
+            "title": "Exact Canary"
+          },
+          "semantic_concept": {
+            "type": "string",
+            "title": "Semantic Concept"
+          },
+          "expected_admitted_memory_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Expected Admitted Memory Ids"
+          },
+          "no_memory_path_is_valid": {
+            "type": "boolean",
+            "title": "No Memory Path Is Valid",
+            "default": true
+          },
+          "required_checks": {
+            "items": {
+              "type": "string",
+              "enum": [
+                "exact_canary",
+                "lexical_overlap",
+                "blinded_semantic"
+              ]
+            },
+            "type": "array",
+            "title": "Required Checks"
+          },
+          "blinded_semantic_judge_input": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Blinded Semantic Judge Input"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "category",
+          "rejected_memory_id",
+          "exact_canary",
+          "semantic_concept",
+          "required_checks"
+        ],
+        "title": "SeparationStressMetadata"
+      },
       "StageLatency": {
         "properties": {
           "gates_ms": {
@@ -1865,6 +2052,59 @@
         },
         "type": "object",
         "title": "StageLatency"
+      },
+      "StudyAScenarioMetadata": {
+        "properties": {
+          "eligible": {
+            "type": "boolean",
+            "title": "Eligible",
+            "default": false
+          },
+          "target_memory_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Target Memory Ids"
+          },
+          "participant_context_translation_status": {
+            "type": "string",
+            "enum": [
+              "not_started",
+              "draft",
+              "needs_human_review",
+              "human_reviewed"
+            ],
+            "title": "Participant Context Translation Status",
+            "default": "not_started"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "StudyAScenarioMetadata"
+      },
+      "StudyBScenarioMetadata": {
+        "properties": {
+          "eligible": {
+            "type": "boolean",
+            "title": "Eligible",
+            "default": false
+          },
+          "participant_context_version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Participant Context Version"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "StudyBScenarioMetadata"
       },
       "StudyRating": {
         "properties": {

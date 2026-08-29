@@ -11,9 +11,10 @@ router = APIRouter(prefix="/api/scenarios", tags=["scenarios"])
 
 
 def all_scenarios() -> list[Scenario]:
-    return discover_scenarios(
-        [repo_root() / "data" / "scenarios" / "golden", repo_root() / "data" / "scenarios" / "core"]
-    )
+    scenarios_root = repo_root() / "data" / "scenarios"
+    dev_root = scenarios_root / "dev_v1"
+    paths = [dev_root] if dev_root.exists() else [scenarios_root / "golden", scenarios_root / "core"]
+    return discover_scenarios(paths)
 
 
 @router.get("")

@@ -1,7 +1,6 @@
 campaign_id: primary_core_example_v1
-scenario_paths: [data/scenarios/golden, data/scenarios/core]
+scenario_paths: [data/scenarios/dev_v1]
 methods: [no_memory, similarity_top_k, one_pass_selective, relevance_two_pass, reconsider_lite, no_physical_separation]
 provider: {name: openai_compatible, model: configure-exact-model-id}
 run: {repetitions: 1, temperature: 0.0, max_output_tokens: 260, timeout_seconds: 45, seed: 454491, similarity_k: 2, max_admitted_memories: 3, max_explicit_callbacks: 1}
 output_dir: results/primary_core_example_v1
-

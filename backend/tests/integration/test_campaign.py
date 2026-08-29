@@ -9,7 +9,7 @@ from bbi.evaluation.runner import run_campaign
 async def test_campaign_writes_complete_synthetic_layout(root, tmp_path):  # type: ignore[no-untyped-def]
     config = {
         "campaign_id": "test_campaign",
-        "scenario_paths": ["data/scenarios/golden"],
+        "scenario_paths": ["data/scenarios/dev_v1"],
         "methods": ["no_memory", "reconsider_lite", "no_physical_separation"],
         "provider": {"name": "mock", "model": "mock-v1"},
         "run": {

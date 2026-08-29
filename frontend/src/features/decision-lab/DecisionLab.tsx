@@ -50,7 +50,7 @@ export function DecisionLab() {
     <section className="page lab-page">
       <div className="page-heading">
         <div>
-          <span className="eyebrow">DECISION LAB · {scenario.data.set}</span>
+          <span className="eyebrow">DECISION LAB · {scenario.data.set_name}</span>
           <h1>{scenario.data.title}</h1>
           <p className="current-message">“{scenario.data.conversation.current_message}”</p>
         </div>
@@ -94,7 +94,7 @@ export function DecisionLab() {
             <span>01</span>
             <h2>Candidate memories</h2>
           </div>
-          {scenario.data.conversation.candidate_memories.map((memory) => (
+          {scenario.data.candidate_memories.map((memory) => (
             <MemoryCard
               key={memory.memory_id}
               memory={memory}
@@ -129,7 +129,7 @@ export function DecisionLab() {
             <div className="outside-box">
               <strong>{t.outside}</strong>
               <p>
-                {scenario.data.conversation.candidate_memories
+                {scenario.data.candidate_memories
                   .filter((item) => !admittedIds.has(item.memory_id))
                   .map((item) => item.memory_id)
                   .join(' · ') || 'None'}

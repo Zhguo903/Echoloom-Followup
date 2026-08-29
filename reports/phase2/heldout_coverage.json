@@ -1,0 +1,103 @@
+{
+  "corpus_kind": "heldout_core",
+  "scenario_count": 48,
+  "domain_counts": {
+    "community": 4,
+    "creative_projects": 4,
+    "education": 4,
+    "entertainment": 4,
+    "family_logistics": 4,
+    "food": 4,
+    "friendship": 4,
+    "hobbies": 4,
+    "household": 4,
+    "routines": 4,
+    "travel": 4,
+    "work": 4
+  },
+  "focal_action_counts": {
+    "ask_first": 12,
+    "ignore": 12,
+    "scoped_explicit": 12,
+    "scoped_implicit": 12
+  },
+  "cross_cutting_minimums": {
+    "beneficial_use_retention": {
+      "minimum": 16,
+      "observed": 24,
+      "pass": true
+    },
+    "no_memory_best": {
+      "minimum": 12,
+      "observed": 12,
+      "pass": true
+    },
+    "stale_state_use": {
+      "minimum": 10,
+      "observed": 12,
+      "pass": true
+    },
+    "wrong_branch_use": {
+      "minimum": 8,
+      "observed": 12,
+      "pass": true
+    },
+    "cross_domain": {
+      "minimum": 10,
+      "observed": 12,
+      "pass": true
+    },
+    "sensitive_disclosure": {
+      "minimum": 10,
+      "observed": 24,
+      "pass": true
+    },
+    "callback_fatigue": {
+      "minimum": 8,
+      "observed": 12,
+      "pass": true
+    },
+    "episode_to_trait": {
+      "minimum": 8,
+      "observed": 12,
+      "pass": true
+    },
+    "required_qualifier": {
+      "minimum": 12,
+      "observed": 24,
+      "pass": true
+    },
+    "conflicting_memories": {
+      "minimum": 8,
+      "observed": 12,
+      "pass": true
+    },
+    "explicit_history_request": {
+      "minimum": 12,
+      "observed": 12,
+      "pass": true
+    },
+    "candidate_order_stress": {
+      "minimum": 12,
+      "observed": 12,
+      "pass": true
+    },
+    "human_disagreement_expected": {
+      "minimum": 12,
+      "observed": 12,
+      "pass": true
+    }
+  },
+  "candidate_count_distribution": {
+    "6": 48
+  },
+  "structural_status": "pass",
+  "violations": [],
+  "review": {
+    "needs_human_review": 48,
+    "fully_human_reviewed": 0
+  },
+  "research_readiness": "not_evaluable",
+  "manifest": "data/manifests/heldout_core_v1.json",
+  "manifest_frozen": false
+}

@@ -11,7 +11,7 @@ from bbi.domain.decisions import (
 )
 from bbi.domain.memory import MemoryCard, MemorySource, ScopeQualifier
 from bbi.domain.runs import RunRecord, ValidatorIssue
-from bbi.domain.scenarios import GoldAnnotations, Scenario
+from bbi.domain.scenarios import AuthorExpectations, Scenario
 
 __all__ = [
     "AdmittedMemoryView",
@@ -25,7 +25,7 @@ __all__ = [
     "GateResult",
     "GeneratorContext",
     "GeneratorOutput",
-    "GoldAnnotations",
+    "AuthorExpectations",
     "MemoryCard",
     "MemorySource",
     "RunRecord",

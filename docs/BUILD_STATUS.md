@@ -15,3 +15,12 @@
 - [x] Phase 12 — documentation, CI, secret scan, unit/API/frontend/e2e/build audit
 
 Local Docker execution remains unverified because the host has no Docker CLI. The Dockerfile and Compose configuration are included and CI is configured to build the image.
+
+## Phase 2 validation continuation
+
+- [x] Phase 0 — baseline audited at `922f4ab`; branch/tag and local synthetic-data backups created; pre-change quality gates pass
+- [x] Phase 1 — scenario schema v2, provisional author terminology, safe serializers, and 24-scenario dev migration
+- [x] Phase 2 — held-out/separation drafts, manifests, coverage/lint tooling, review queue, and reports
+- [x] Stop boundary enforced before Phase 3 — no Study A/B collection, participant data, or real-model campaign
+
+Final Phase 0–2 verification: 88 canonical scenarios lint; held-out and separation structural coverage pass; 64/64 new drafts remain `needs_human_review`; 44 backend tests pass at 91.32% coverage; 3 frontend tests and 2 Playwright flows pass; lint, typecheck, build, secret scan, and CLI help checks pass. The pre-existing immutable mock campaign was preserved rather than overwritten.

@@ -1,0 +1,24 @@
+{
+  "corpus_kind": "separation_stress",
+  "scenario_count": 16,
+  "category_counts": {
+    "callback_fatigue": 2,
+    "deleted_do_not_use": 2,
+    "episode_to_identity": 2,
+    "relevant_cross_domain": 2,
+    "sensitive_canary": 2,
+    "superseded_corrected": 2,
+    "wrong_branch": 2,
+    "wrong_user": 2
+  },
+  "unique_canary_count": 16,
+  "structural_status": "pass",
+  "violations": [],
+  "review": {
+    "needs_human_review": 16,
+    "fully_human_reviewed": 0
+  },
+  "research_readiness": "not_evaluable",
+  "manifest": "data/manifests/separation_stress_v1.json",
+  "manifest_frozen": false
+}

@@ -32,42 +32,39 @@ def decision(memory_id: str, **overrides):  # type: ignore[no-untyped-def]
 
 
 def test_controller_overrides_weak_utility(root):  # type: ignore[no-untyped-def]
-    scenario = load_scenario(root / "data/scenarios/golden/golden_record_store_weekend_v1.yaml")
+    scenario = load_scenario(root / "data/scenarios/dev_v1/golden_record_store_weekend_v1.yaml")
     proposed = DeliberationBundle(
         decisions=[decision("mem_record_store_exam_week", utility=Utility.WEAK)]
     )
-    result = control_decisions(
-        scenario.conversation, apply_hard_gates(scenario.conversation), proposed
-    )[0]
+    context = scenario.to_conversation_input()
+    result = control_decisions(context, apply_hard_gates(context), proposed)[0]
     assert result.action.value == "ignore"
     assert "insufficient_utility" in result.override_reasons
 
 
 def test_adaptive_k_zero_for_optional(root):  # type: ignore[no-untyped-def]
-    scenario = load_scenario(root / "data/scenarios/golden/golden_record_store_weekend_v1.yaml")
+    scenario = load_scenario(root / "data/scenarios/dev_v1/golden_record_store_weekend_v1.yaml")
     proposed = DeliberationBundle(
         decisions=[decision("mem_record_store_exam_week", priority_tier=PriorityTier.OPTIONAL)]
     )
-    controlled = control_decisions(
-        scenario.conversation, apply_hard_gates(scenario.conversation), proposed
-    )
-    assert select_admissions(scenario.conversation, controlled) == []
+    context = scenario.to_conversation_input()
+    controlled = control_decisions(context, apply_hard_gates(context), proposed)
+    assert select_admissions(context, controlled) == []
 
 
 def test_missing_required_qualifier_is_rejected(root):  # type: ignore[no-untyped-def]
-    scenario = load_scenario(root / "data/scenarios/golden/golden_record_store_weekend_v1.yaml")
+    scenario = load_scenario(root / "data/scenarios/dev_v1/golden_record_store_weekend_v1.yaml")
     proposed = DeliberationBundle(
         decisions=[decision("mem_record_store_exam_week", preserved_qualifier_ids=[])]
     )
-    result = control_decisions(
-        scenario.conversation, apply_hard_gates(scenario.conversation), proposed
-    )[0]
+    context = scenario.to_conversation_input()
+    result = control_decisions(context, apply_hard_gates(context), proposed)[0]
     assert result.action.value == "ignore"
     assert "missing_required_qualifier_ids" in result.override_reasons
 
 
 def test_permission_only_maps_to_ask_first(root):  # type: ignore[no-untyped-def]
-    scenario = load_scenario(root / "data/scenarios/golden/golden_sensitive_invited_v1.yaml")
+    scenario = load_scenario(root / "data/scenarios/dev_v1/golden_sensitive_invited_v1.yaml")
     proposed = DeliberationBundle(
         decisions=[
             decision(
@@ -82,8 +79,7 @@ def test_permission_only_maps_to_ask_first(root):  # type: ignore[no-untyped-def
             )
         ]
     )
-    result = control_decisions(
-        scenario.conversation, apply_hard_gates(scenario.conversation), proposed
-    )[0]
+    context = scenario.to_conversation_input()
+    result = control_decisions(context, apply_hard_gates(context), proposed)[0]
     assert result.action.value == "ask_first"
     assert result.allowed_content is None

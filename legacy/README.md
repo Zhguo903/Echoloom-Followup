@@ -6,3 +6,6 @@ The original EchoLoom prototype is intentionally not copied into this repository
 
 It is product context only, not the research contribution or a runtime dependency. No personal, course, competitor, or third-party assets are imported.
 
+## Preserved scenario v1 fixtures
+
+The byte-identical pre-Phase-2 scenario files are retained under `legacy/scenarios_v1/golden/` and `legacy/scenarios_v1/core/`. They contain the legacy `gold` field solely for migration compatibility and historical audit. Runtime discovery, model inputs, and the interactive demo use only canonical v2 files under `data/scenarios/dev_v1/`.

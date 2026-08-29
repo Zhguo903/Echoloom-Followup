@@ -1,7 +1,6 @@
 campaign_id: mock_core_v1
 scenario_paths:
-  - data/scenarios/golden
-  - data/scenarios/core
+  - data/scenarios/dev_v1
 methods:
   - no_memory
   - similarity_top_k
@@ -30,4 +29,3 @@ judging:
   gold_action_sets: true
   optional_llm_judge: false
 output_dir: results/mock_core_v1
-

@@ -30,12 +30,12 @@ export interface Scenario {
   scenario_id: string
   family_id: string
   title: string
-  set: string
+  set_name: string
   tags: string[]
+  candidate_memories: MemoryCard[]
   conversation: {
     current_message: string
     active_branch: string
-    candidate_memories: MemoryCard[]
   }
 }
 

@@ -11,4 +11,6 @@ This prototype operationalizes design requirements; it does not establish univer
 - Customer-discovery surveys are not academic participant data.
 - Reconsider-Lite neither simulates human cognition nor guarantees safety.
 - Null, mixed, and heterogeneous outcomes are valid and must remain reportable.
-
+- The first 24 scenario annotations and all new draft annotations are provisional author expectations, not human gold.
+- Passing scenario lint or matrix coverage is an engineering result, not evidence of relational appropriateness.
+- No Study A/Study B outcome, real-model effect, or physical-separation effect exists until authorized real data are collected and analyzed.

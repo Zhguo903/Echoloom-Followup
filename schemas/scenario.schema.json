@@ -1,5 +1,87 @@
 {
   "$defs": {
+    "AuthorExpectations": {
+      "additionalProperties": false,
+      "description": "Provisional researcher hypotheses, never participant or model truth.",
+      "properties": {
+        "status": {
+          "const": "provisional_design_hypothesis",
+          "default": "provisional_design_hypothesis",
+          "title": "Status",
+          "type": "string"
+        },
+        "focal_memory_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Focal Memory Id"
+        },
+        "beneficial_memory_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Beneficial Memory Ids",
+          "type": "array"
+        },
+        "harmful_or_forbidden_memory_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Harmful Or Forbidden Memory Ids",
+          "type": "array"
+        },
+        "acceptable_actions_by_memory": {
+          "additionalProperties": {
+            "items": {
+              "$ref": "#/$defs/PublicAction"
+            },
+            "type": "array"
+          },
+          "title": "Acceptable Actions By Memory",
+          "type": "object"
+        },
+        "required_qualifiers": {
+          "additionalProperties": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "title": "Required Qualifiers",
+          "type": "object"
+        },
+        "expected_failure_tags": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Expected Failure Tags",
+          "type": "array"
+        },
+        "canary_terms": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Canary Terms",
+          "type": "object"
+        },
+        "rationale": {
+          "default": "Provisional synthetic design hypothesis; not a human judgment.",
+          "title": "Rationale",
+          "type": "string"
+        }
+      },
+      "required": [
+        "acceptable_actions_by_memory"
+      ],
+      "title": "AuthorExpectations",
+      "type": "object"
+    },
     "CallbackEvent": {
       "properties": {
         "memory_id": {
@@ -16,65 +98,6 @@
         "memory_id"
       ],
       "title": "CallbackEvent",
-      "type": "object"
-    },
-    "ConversationInput": {
-      "additionalProperties": false,
-      "properties": {
-        "conversation_id": {
-          "title": "Conversation Id",
-          "type": "string"
-        },
-        "owner_id": {
-          "title": "Owner Id",
-          "type": "string"
-        },
-        "character_id": {
-          "title": "Character Id",
-          "type": "string"
-        },
-        "active_branch": {
-          "default": "main",
-          "title": "Active Branch",
-          "type": "string"
-        },
-        "current_message": {
-          "maxLength": 8000,
-          "minLength": 1,
-          "title": "Current Message",
-          "type": "string"
-        },
-        "recent_turns": {
-          "items": {
-            "$ref": "#/$defs/DialogueTurn"
-          },
-          "maxItems": 20,
-          "title": "Recent Turns",
-          "type": "array"
-        },
-        "callback_history": {
-          "items": {
-            "$ref": "#/$defs/CallbackEvent"
-          },
-          "title": "Callback History",
-          "type": "array"
-        },
-        "candidate_memories": {
-          "items": {
-            "$ref": "#/$defs/MemoryCard"
-          },
-          "maxItems": 20,
-          "title": "Candidate Memories",
-          "type": "array"
-        }
-      },
-      "required": [
-        "conversation_id",
-        "owner_id",
-        "character_id",
-        "current_message"
-      ],
-      "title": "ConversationInput",
       "type": "object"
     },
     "CurrentnessState": {
@@ -106,63 +129,6 @@
         "content"
       ],
       "title": "DialogueTurn",
-      "type": "object"
-    },
-    "GoldAnnotations": {
-      "properties": {
-        "beneficial_memory_ids": {
-          "items": {
-            "type": "string"
-          },
-          "title": "Beneficial Memory Ids",
-          "type": "array"
-        },
-        "harmful_or_forbidden_memory_ids": {
-          "items": {
-            "type": "string"
-          },
-          "title": "Harmful Or Forbidden Memory Ids",
-          "type": "array"
-        },
-        "acceptable_actions": {
-          "additionalProperties": {
-            "items": {
-              "$ref": "#/$defs/PublicAction"
-            },
-            "type": "array"
-          },
-          "title": "Acceptable Actions",
-          "type": "object"
-        },
-        "required_qualifiers": {
-          "additionalProperties": {
-            "items": {
-              "type": "string"
-            },
-            "type": "array"
-          },
-          "title": "Required Qualifiers",
-          "type": "object"
-        },
-        "expected_failure_tags": {
-          "items": {
-            "type": "string"
-          },
-          "title": "Expected Failure Tags",
-          "type": "array"
-        },
-        "canary_terms": {
-          "additionalProperties": {
-            "type": "string"
-          },
-          "title": "Canary Terms",
-          "type": "object"
-        }
-      },
-      "required": [
-        "acceptable_actions"
-      ],
-      "title": "GoldAnnotations",
       "type": "object"
     },
     "MemoryCard": {
@@ -388,6 +354,7 @@
       "type": "string"
     },
     "ParticipantProfile": {
+      "additionalProperties": false,
       "properties": {
         "profile_id": {
           "title": "Profile Id",
@@ -425,7 +392,60 @@
       "title": "PublicAction",
       "type": "string"
     },
+    "ScenarioConversation": {
+      "additionalProperties": false,
+      "description": "Conversation fields stored in schema v2, without duplicated candidate cards.",
+      "properties": {
+        "conversation_id": {
+          "title": "Conversation Id",
+          "type": "string"
+        },
+        "owner_id": {
+          "title": "Owner Id",
+          "type": "string"
+        },
+        "character_id": {
+          "title": "Character Id",
+          "type": "string"
+        },
+        "active_branch": {
+          "default": "main",
+          "title": "Active Branch",
+          "type": "string"
+        },
+        "current_message": {
+          "maxLength": 8000,
+          "minLength": 1,
+          "title": "Current Message",
+          "type": "string"
+        },
+        "recent_turns": {
+          "items": {
+            "$ref": "#/$defs/DialogueTurn"
+          },
+          "maxItems": 20,
+          "title": "Recent Turns",
+          "type": "array"
+        },
+        "callback_history": {
+          "items": {
+            "$ref": "#/$defs/CallbackEvent"
+          },
+          "title": "Callback History",
+          "type": "array"
+        }
+      },
+      "required": [
+        "conversation_id",
+        "owner_id",
+        "character_id",
+        "current_message"
+      ],
+      "title": "ScenarioConversation",
+      "type": "object"
+    },
     "ScenarioNotes": {
+      "additionalProperties": false,
       "properties": {
         "claim_status": {
           "default": "design_hypothesis",
@@ -439,6 +459,52 @@
         }
       },
       "title": "ScenarioNotes",
+      "type": "object"
+    },
+    "ScenarioReviewMetadata": {
+      "additionalProperties": false,
+      "properties": {
+        "generated_by": {
+          "title": "Generated By",
+          "type": "string"
+        },
+        "content_review_status": {
+          "default": "needs_human_review",
+          "enum": [
+            "needs_human_review",
+            "human_reviewed"
+          ],
+          "title": "Content Review Status",
+          "type": "string"
+        },
+        "research_review_status": {
+          "default": "needs_human_review",
+          "enum": [
+            "needs_human_review",
+            "human_reviewed"
+          ],
+          "title": "Research Review Status",
+          "type": "string"
+        },
+        "reviewed_by": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Reviewed By",
+          "type": "array"
+        },
+        "review_notes": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Review Notes",
+          "type": "array"
+        }
+      },
+      "required": [
+        "generated_by"
+      ],
+      "title": "ScenarioReviewMetadata",
       "type": "object"
     },
     "ScopeQualifier": {
@@ -481,12 +547,134 @@
       ],
       "title": "Sensitivity",
       "type": "string"
+    },
+    "SeparationStressMetadata": {
+      "additionalProperties": false,
+      "properties": {
+        "category": {
+          "title": "Category",
+          "type": "string"
+        },
+        "rejected_memory_id": {
+          "title": "Rejected Memory Id",
+          "type": "string"
+        },
+        "exact_canary": {
+          "title": "Exact Canary",
+          "type": "string"
+        },
+        "semantic_concept": {
+          "title": "Semantic Concept",
+          "type": "string"
+        },
+        "expected_admitted_memory_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Expected Admitted Memory Ids",
+          "type": "array"
+        },
+        "no_memory_path_is_valid": {
+          "default": true,
+          "title": "No Memory Path Is Valid",
+          "type": "boolean"
+        },
+        "required_checks": {
+          "items": {
+            "enum": [
+              "exact_canary",
+              "lexical_overlap",
+              "blinded_semantic"
+            ],
+            "type": "string"
+          },
+          "title": "Required Checks",
+          "type": "array"
+        },
+        "blinded_semantic_judge_input": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Blinded Semantic Judge Input"
+        }
+      },
+      "required": [
+        "category",
+        "rejected_memory_id",
+        "exact_canary",
+        "semantic_concept",
+        "required_checks"
+      ],
+      "title": "SeparationStressMetadata",
+      "type": "object"
+    },
+    "StudyAScenarioMetadata": {
+      "additionalProperties": false,
+      "properties": {
+        "eligible": {
+          "default": false,
+          "title": "Eligible",
+          "type": "boolean"
+        },
+        "target_memory_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Target Memory Ids",
+          "type": "array"
+        },
+        "participant_context_translation_status": {
+          "default": "not_started",
+          "enum": [
+            "not_started",
+            "draft",
+            "needs_human_review",
+            "human_reviewed"
+          ],
+          "title": "Participant Context Translation Status",
+          "type": "string"
+        }
+      },
+      "title": "StudyAScenarioMetadata",
+      "type": "object"
+    },
+    "StudyBScenarioMetadata": {
+      "additionalProperties": false,
+      "properties": {
+        "eligible": {
+          "default": false,
+          "title": "Eligible",
+          "type": "boolean"
+        },
+        "participant_context_version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Participant Context Version"
+        }
+      },
+      "title": "StudyBScenarioMetadata",
+      "type": "object"
     }
   },
   "additionalProperties": false,
+  "description": "Canonical scenario v2 model with a compatibility loader for v1 files.",
   "properties": {
     "schema_version": {
-      "default": 1,
+      "const": 2,
+      "default": 2,
       "title": "Schema Version",
       "type": "integer"
     },
@@ -512,10 +700,34 @@
       "title": "Language",
       "type": "string"
     },
-    "set": {
-      "default": "core",
-      "title": "Set",
+    "set_name": {
+      "title": "Set Name",
       "type": "string"
+    },
+    "status": {
+      "default": "draft",
+      "enum": [
+        "draft",
+        "reviewed",
+        "frozen"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "domain": {
+      "title": "Domain",
+      "type": "string"
+    },
+    "focal_action_profile": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/PublicAction"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
     },
     "tags": {
       "items": {
@@ -528,10 +740,39 @@
       "$ref": "#/$defs/ParticipantProfile"
     },
     "conversation": {
-      "$ref": "#/$defs/ConversationInput"
+      "$ref": "#/$defs/ScenarioConversation"
     },
-    "gold": {
-      "$ref": "#/$defs/GoldAnnotations"
+    "candidate_memories": {
+      "items": {
+        "$ref": "#/$defs/MemoryCard"
+      },
+      "maxItems": 20,
+      "minItems": 1,
+      "title": "Candidate Memories",
+      "type": "array"
+    },
+    "study_a": {
+      "$ref": "#/$defs/StudyAScenarioMetadata"
+    },
+    "study_b": {
+      "$ref": "#/$defs/StudyBScenarioMetadata"
+    },
+    "author_expectations": {
+      "$ref": "#/$defs/AuthorExpectations"
+    },
+    "review": {
+      "$ref": "#/$defs/ScenarioReviewMetadata"
+    },
+    "separation_stress": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/SeparationStressMetadata"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
     },
     "notes": {
       "$ref": "#/$defs/ScenarioNotes"
@@ -542,9 +783,13 @@
     "family_id",
     "version",
     "title",
+    "set_name",
+    "domain",
     "participant_profile",
     "conversation",
-    "gold"
+    "candidate_memories",
+    "author_expectations",
+    "review"
   ],
   "title": "Scenario",
   "type": "object"
