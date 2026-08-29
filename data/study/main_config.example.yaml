@@ -1,0 +1,8 @@
+protocol_version: pending-ethics-main-v1
+enabled: false
+adult_only: true
+participants_planned: null
+conditions_per_scenario: 2
+seed: 454491
+warning: "Confirm ethics, consent, sample planning, and compensation before enabling."
+

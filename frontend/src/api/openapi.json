@@ -1,0 +1,2105 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Before Bringing It Up API",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/health": {
+      "get": {
+        "summary": "Health",
+        "operationId": "health_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "type": "object",
+                  "title": "Response Health Health Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/version": {
+      "get": {
+        "summary": "Version",
+        "operationId": "version_api_version_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "type": "object",
+                  "title": "Response Version Api Version Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/scenarios": {
+      "get": {
+        "tags": [
+          "scenarios"
+        ],
+        "summary": "List Scenarios",
+        "operationId": "list_scenarios_api_scenarios_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/Scenario"
+                  },
+                  "type": "array",
+                  "title": "Response List Scenarios Api Scenarios Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/scenarios/{scenario_id}": {
+      "get": {
+        "tags": [
+          "scenarios"
+        ],
+        "summary": "Get Scenario",
+        "operationId": "get_scenario_api_scenarios__scenario_id__get",
+        "parameters": [
+          {
+            "name": "scenario_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Scenario Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Scenario"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/scenarios/validate": {
+      "post": {
+        "tags": [
+          "scenarios"
+        ],
+        "summary": "Validate Scenarios",
+        "operationId": "validate_scenarios_api_scenarios_validate_post",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Validate Scenarios Api Scenarios Validate Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/runs": {
+      "post": {
+        "tags": [
+          "runs"
+        ],
+        "summary": "Create Run",
+        "operationId": "create_run_api_runs_post",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RunRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RunRecord"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "runs"
+        ],
+        "summary": "List Runs",
+        "operationId": "list_runs_api_runs_get",
+        "parameters": [
+          {
+            "name": "scenario_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Scenario Id"
+            }
+          },
+          {
+            "name": "method",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Method"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RunRecord"
+                  },
+                  "title": "Response List Runs Api Runs Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/runs/{run_id}": {
+      "get": {
+        "tags": [
+          "runs"
+        ],
+        "summary": "Get Run",
+        "operationId": "get_run_api_runs__run_id__get",
+        "parameters": [
+          {
+            "name": "run_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Run Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RunRecord"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/compare": {
+      "post": {
+        "tags": [
+          "runs"
+        ],
+        "summary": "Compare",
+        "operationId": "compare_api_compare_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompareRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/RunRecord"
+                  },
+                  "type": "array",
+                  "title": "Response Compare Api Compare Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/study/sessions": {
+      "post": {
+        "tags": [
+          "study"
+        ],
+        "summary": "Create Session",
+        "operationId": "create_session_api_study_sessions_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudySessionCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudySession"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/study/sessions/{session_id}/next": {
+      "get": {
+        "tags": [
+          "study"
+        ],
+        "summary": "Next Assignment",
+        "operationId": "next_assignment_api_study_sessions__session_id__next_get",
+        "parameters": [
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Session Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Next Assignment Api Study Sessions  Session Id  Next Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/study/sessions/{session_id}/responses": {
+      "post": {
+        "tags": [
+          "study"
+        ],
+        "summary": "Add Response",
+        "operationId": "add_response_api_study_sessions__session_id__responses_post",
+        "parameters": [
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Session Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudyRating"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "boolean"
+                  },
+                  "title": "Response Add Response Api Study Sessions  Session Id  Responses Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/study/sessions/{session_id}/withdraw": {
+      "post": {
+        "tags": [
+          "study"
+        ],
+        "summary": "Withdraw",
+        "operationId": "withdraw_api_study_sessions__session_id__withdraw_post",
+        "parameters": [
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Session Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "boolean"
+                  },
+                  "title": "Response Withdraw Api Study Sessions  Session Id  Withdraw Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/export/runs": {
+      "get": {
+        "tags": [
+          "admin"
+        ],
+        "summary": "Export Runs",
+        "operationId": "export_runs_api_admin_export_runs_get",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/export/study": {
+      "get": {
+        "tags": [
+          "admin"
+        ],
+        "summary": "Export Study",
+        "operationId": "export_study_api_admin_export_study_get",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/reset-demo-data": {
+      "post": {
+        "tags": [
+          "admin"
+        ],
+        "summary": "Reset Demo Data",
+        "operationId": "reset_demo_data_api_admin_reset_demo_data_post",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "boolean"
+                  },
+                  "title": "Response Reset Demo Data Api Admin Reset Demo Data Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Admission": {
+        "type": "string",
+        "enum": [
+          "use",
+          "do_not_use",
+          "ask_permission"
+        ],
+        "title": "Admission"
+      },
+      "AdmittedMemoryView": {
+        "properties": {
+          "memory_id": {
+            "type": "string",
+            "title": "Memory Id"
+          },
+          "action": {
+            "$ref": "#/components/schemas/PublicAction"
+          },
+          "allowed_content": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Allowed Content"
+          },
+          "required_qualifiers": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Required Qualifiers"
+          },
+          "sanitized_permission_topic": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sanitized Permission Topic"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "memory_id",
+          "action"
+        ],
+        "title": "AdmittedMemoryView"
+      },
+      "CallbackEvent": {
+        "properties": {
+          "memory_id": {
+            "type": "string",
+            "title": "Memory Id"
+          },
+          "explicit": {
+            "type": "boolean",
+            "title": "Explicit",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "memory_id"
+        ],
+        "title": "CallbackEvent"
+      },
+      "CompareRequest": {
+        "properties": {
+          "scenario_id": {
+            "type": "string",
+            "title": "Scenario Id"
+          },
+          "provider": {
+            "type": "string",
+            "const": "mock",
+            "title": "Provider",
+            "default": "mock"
+          },
+          "seed": {
+            "type": "integer",
+            "title": "Seed",
+            "default": 454491
+          }
+        },
+        "type": "object",
+        "required": [
+          "scenario_id"
+        ],
+        "title": "CompareRequest"
+      },
+      "ControllerDecision": {
+        "properties": {
+          "memory_id": {
+            "type": "string",
+            "title": "Memory Id"
+          },
+          "action": {
+            "$ref": "#/components/schemas/PublicAction"
+          },
+          "allowed_content": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Allowed Content"
+          },
+          "required_qualifier_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Required Qualifier Ids"
+          },
+          "sanitized_permission_topic": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sanitized Permission Topic"
+          },
+          "priority_tier": {
+            "$ref": "#/components/schemas/PriorityTier",
+            "default": "optional"
+          },
+          "override_reasons": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Override Reasons"
+          }
+        },
+        "type": "object",
+        "required": [
+          "memory_id",
+          "action"
+        ],
+        "title": "ControllerDecision"
+      },
+      "ConversationInput": {
+        "properties": {
+          "conversation_id": {
+            "type": "string",
+            "title": "Conversation Id"
+          },
+          "owner_id": {
+            "type": "string",
+            "title": "Owner Id"
+          },
+          "character_id": {
+            "type": "string",
+            "title": "Character Id"
+          },
+          "active_branch": {
+            "type": "string",
+            "title": "Active Branch",
+            "default": "main"
+          },
+          "current_message": {
+            "type": "string",
+            "maxLength": 8000,
+            "minLength": 1,
+            "title": "Current Message"
+          },
+          "recent_turns": {
+            "items": {
+              "$ref": "#/components/schemas/DialogueTurn"
+            },
+            "type": "array",
+            "maxItems": 20,
+            "title": "Recent Turns"
+          },
+          "callback_history": {
+            "items": {
+              "$ref": "#/components/schemas/CallbackEvent"
+            },
+            "type": "array",
+            "title": "Callback History"
+          },
+          "candidate_memories": {
+            "items": {
+              "$ref": "#/components/schemas/MemoryCard"
+            },
+            "type": "array",
+            "maxItems": 20,
+            "title": "Candidate Memories"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "conversation_id",
+          "owner_id",
+          "character_id",
+          "current_message"
+        ],
+        "title": "ConversationInput"
+      },
+      "CurrentnessState": {
+        "type": "string",
+        "enum": [
+          "current",
+          "superseded",
+          "contradicted",
+          "uncertain"
+        ],
+        "title": "CurrentnessState"
+      },
+      "DeliberationBundle": {
+        "properties": {
+          "schema_version": {
+            "type": "integer",
+            "title": "Schema Version",
+            "default": 1
+          },
+          "decisions": {
+            "items": {
+              "$ref": "#/components/schemas/DeliberationDecision"
+            },
+            "type": "array",
+            "title": "Decisions"
+          }
+        },
+        "type": "object",
+        "required": [
+          "decisions"
+        ],
+        "title": "DeliberationBundle"
+      },
+      "DeliberationDecision": {
+        "properties": {
+          "memory_id": {
+            "type": "string",
+            "title": "Memory Id"
+          },
+          "utility": {
+            "$ref": "#/components/schemas/Utility"
+          },
+          "warrant": {
+            "$ref": "#/components/schemas/Warrant"
+          },
+          "scope_status": {
+            "$ref": "#/components/schemas/ScopeStatus"
+          },
+          "admission": {
+            "$ref": "#/components/schemas/Admission"
+          },
+          "allowed_content": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Allowed Content"
+          },
+          "preserved_qualifier_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Preserved Qualifier Ids"
+          },
+          "sensitivity": {
+            "$ref": "#/components/schemas/Sensitivity"
+          },
+          "expression": {
+            "$ref": "#/components/schemas/Expression"
+          },
+          "priority_tier": {
+            "$ref": "#/components/schemas/PriorityTier"
+          },
+          "sanitized_permission_topic": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sanitized Permission Topic"
+          },
+          "brief_rationale": {
+            "type": "string",
+            "maxLength": 320,
+            "title": "Brief Rationale"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "memory_id",
+          "utility",
+          "warrant",
+          "scope_status",
+          "admission",
+          "sensitivity",
+          "expression",
+          "priority_tier",
+          "brief_rationale"
+        ],
+        "title": "DeliberationDecision"
+      },
+      "DialogueTurn": {
+        "properties": {
+          "role": {
+            "type": "string",
+            "title": "Role"
+          },
+          "content": {
+            "type": "string",
+            "maxLength": 8000,
+            "minLength": 1,
+            "title": "Content"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "role",
+          "content"
+        ],
+        "title": "DialogueTurn"
+      },
+      "Expression": {
+        "type": "string",
+        "enum": [
+          "none",
+          "implicit",
+          "explicit",
+          "ask_first"
+        ],
+        "title": "Expression"
+      },
+      "GateBundle": {
+        "properties": {
+          "results": {
+            "items": {
+              "$ref": "#/components/schemas/GateResult"
+            },
+            "type": "array",
+            "title": "Results"
+          }
+        },
+        "type": "object",
+        "required": [
+          "results"
+        ],
+        "title": "GateBundle"
+      },
+      "GateResult": {
+        "properties": {
+          "memory_id": {
+            "type": "string",
+            "title": "Memory Id"
+          },
+          "eligible_for_deliberation": {
+            "type": "boolean",
+            "title": "Eligible For Deliberation"
+          },
+          "direct_use_allowed": {
+            "type": "boolean",
+            "title": "Direct Use Allowed"
+          },
+          "permission_only": {
+            "type": "boolean",
+            "title": "Permission Only"
+          },
+          "rejected": {
+            "type": "boolean",
+            "title": "Rejected"
+          },
+          "reason_codes": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Reason Codes"
+          },
+          "sanitized_topic": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sanitized Topic"
+          }
+        },
+        "type": "object",
+        "required": [
+          "memory_id",
+          "eligible_for_deliberation",
+          "direct_use_allowed",
+          "permission_only",
+          "rejected"
+        ],
+        "title": "GateResult"
+      },
+      "GoldAnnotations": {
+        "properties": {
+          "beneficial_memory_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Beneficial Memory Ids"
+          },
+          "harmful_or_forbidden_memory_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Harmful Or Forbidden Memory Ids"
+          },
+          "acceptable_actions": {
+            "additionalProperties": {
+              "items": {
+                "$ref": "#/components/schemas/PublicAction"
+              },
+              "type": "array"
+            },
+            "type": "object",
+            "title": "Acceptable Actions"
+          },
+          "required_qualifiers": {
+            "additionalProperties": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "type": "object",
+            "title": "Required Qualifiers"
+          },
+          "expected_failure_tags": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Expected Failure Tags"
+          },
+          "canary_terms": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object",
+            "title": "Canary Terms"
+          }
+        },
+        "type": "object",
+        "required": [
+          "acceptable_actions"
+        ],
+        "title": "GoldAnnotations"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "MemoryCard": {
+        "properties": {
+          "schema_version": {
+            "type": "integer",
+            "title": "Schema Version",
+            "default": 1
+          },
+          "memory_id": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Memory Id"
+          },
+          "owner_id": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Owner Id"
+          },
+          "character_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Character Id"
+          },
+          "content": {
+            "type": "string",
+            "maxLength": 2000,
+            "minLength": 1,
+            "title": "Content"
+          },
+          "memory_type": {
+            "$ref": "#/components/schemas/MemoryType"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          },
+          "source": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/MemorySource"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "confidence": {
+            "type": "number",
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Confidence"
+          },
+          "sensitivity": {
+            "$ref": "#/components/schemas/Sensitivity"
+          },
+          "permission_state": {
+            "$ref": "#/components/schemas/PermissionState"
+          },
+          "currentness": {
+            "$ref": "#/components/schemas/CurrentnessState"
+          },
+          "supersedes_memory_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Supersedes Memory Ids"
+          },
+          "superseded_by_memory_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Superseded By Memory Id"
+          },
+          "confirmed_by_user": {
+            "type": "boolean",
+            "title": "Confirmed By User",
+            "default": true
+          },
+          "is_model_inference": {
+            "type": "boolean",
+            "title": "Is Model Inference",
+            "default": false
+          },
+          "recent_callback_count": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Recent Callback Count",
+            "default": 0
+          },
+          "last_callback_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Callback At"
+          },
+          "narrative_branch": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Narrative Branch",
+            "default": "main"
+          },
+          "scope_qualifiers": {
+            "items": {
+              "$ref": "#/components/schemas/ScopeQualifier"
+            },
+            "type": "array",
+            "title": "Scope Qualifiers"
+          },
+          "sanitized_topic": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sanitized Topic"
+          },
+          "tags": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Tags"
+          },
+          "restrictions": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Restrictions"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "memory_id",
+          "owner_id",
+          "content",
+          "memory_type",
+          "created_at",
+          "source",
+          "confidence",
+          "sensitivity",
+          "permission_state",
+          "currentness"
+        ],
+        "title": "MemoryCard"
+      },
+      "MemorySource": {
+        "properties": {
+          "source_type": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Source Type"
+          },
+          "source_id": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Source Id"
+          },
+          "speaker": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Speaker"
+          },
+          "captured_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Captured At"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "source_type",
+          "source_id",
+          "speaker",
+          "captured_at"
+        ],
+        "title": "MemorySource"
+      },
+      "MemoryType": {
+        "type": "string",
+        "enum": [
+          "personal_fact",
+          "stable_preference",
+          "episodic_experience",
+          "shared_relational_experience",
+          "relationship_state",
+          "milestone",
+          "sensitive_history",
+          "unresolved_issue",
+          "corrected_state",
+          "alternate_context",
+          "model_inference"
+        ],
+        "title": "MemoryType"
+      },
+      "MethodName": {
+        "type": "string",
+        "enum": [
+          "no_memory",
+          "similarity_top_k",
+          "one_pass_selective",
+          "relevance_two_pass",
+          "reconsider_lite",
+          "no_physical_separation"
+        ],
+        "title": "MethodName"
+      },
+      "ParticipantProfile": {
+        "properties": {
+          "profile_id": {
+            "type": "string",
+            "title": "Profile Id"
+          },
+          "description": {
+            "type": "string",
+            "title": "Description"
+          }
+        },
+        "type": "object",
+        "required": [
+          "profile_id",
+          "description"
+        ],
+        "title": "ParticipantProfile"
+      },
+      "PermissionState": {
+        "type": "string",
+        "enum": [
+          "allowed",
+          "ask_before_use",
+          "forbidden",
+          "deleted"
+        ],
+        "title": "PermissionState"
+      },
+      "PriorityTier": {
+        "type": "string",
+        "enum": [
+          "optional",
+          "material",
+          "essential"
+        ],
+        "title": "PriorityTier"
+      },
+      "PublicAction": {
+        "type": "string",
+        "enum": [
+          "ignore",
+          "scoped_implicit",
+          "scoped_explicit",
+          "ask_first"
+        ],
+        "title": "PublicAction"
+      },
+      "RunRecord": {
+        "properties": {
+          "run_id": {
+            "type": "string",
+            "title": "Run Id"
+          },
+          "campaign_id": {
+            "type": "string",
+            "title": "Campaign Id",
+            "default": "adhoc"
+          },
+          "scenario_id": {
+            "type": "string",
+            "title": "Scenario Id"
+          },
+          "scenario_version": {
+            "type": "integer",
+            "title": "Scenario Version"
+          },
+          "method": {
+            "$ref": "#/components/schemas/MethodName"
+          },
+          "provider": {
+            "type": "string",
+            "title": "Provider"
+          },
+          "model_id": {
+            "type": "string",
+            "title": "Model Id"
+          },
+          "prompt_versions": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object",
+            "title": "Prompt Versions"
+          },
+          "prompt_hashes": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object",
+            "title": "Prompt Hashes"
+          },
+          "config_hash": {
+            "type": "string",
+            "title": "Config Hash"
+          },
+          "random_seed": {
+            "type": "integer",
+            "title": "Random Seed"
+          },
+          "candidate_order": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Candidate Order"
+          },
+          "hard_gates": {
+            "$ref": "#/components/schemas/GateBundle"
+          },
+          "deliberation": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DeliberationBundle"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "controller_decisions": {
+            "items": {
+              "$ref": "#/components/schemas/ControllerDecision"
+            },
+            "type": "array",
+            "title": "Controller Decisions"
+          },
+          "admitted_views": {
+            "items": {
+              "$ref": "#/components/schemas/AdmittedMemoryView"
+            },
+            "type": "array",
+            "title": "Admitted Views"
+          },
+          "visible_reply": {
+            "type": "string",
+            "title": "Visible Reply"
+          },
+          "actions": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/PublicAction"
+            },
+            "type": "object",
+            "title": "Actions"
+          },
+          "validator_issues": {
+            "items": {
+              "$ref": "#/components/schemas/ValidatorIssue"
+            },
+            "type": "array",
+            "title": "Validator Issues"
+          },
+          "repair_count": {
+            "type": "integer",
+            "title": "Repair Count",
+            "default": 0
+          },
+          "fallback_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fallback Type"
+          },
+          "latency": {
+            "$ref": "#/components/schemas/StageLatency"
+          },
+          "token_usage": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "Token Usage"
+          },
+          "configured_cost_estimate": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Configured Cost Estimate"
+          },
+          "schema_valid": {
+            "type": "boolean",
+            "title": "Schema Valid",
+            "default": true
+          },
+          "input_hash": {
+            "type": "string",
+            "title": "Input Hash"
+          },
+          "output_hash": {
+            "type": "string",
+            "title": "Output Hash"
+          },
+          "generator_request_json": {
+            "type": "string",
+            "title": "Generator Request Json"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          },
+          "software_commit_hash": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Software Commit Hash"
+          },
+          "extra": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Extra"
+          }
+        },
+        "type": "object",
+        "required": [
+          "run_id",
+          "scenario_id",
+          "scenario_version",
+          "method",
+          "provider",
+          "model_id",
+          "config_hash",
+          "random_seed",
+          "candidate_order",
+          "hard_gates",
+          "visible_reply",
+          "input_hash",
+          "output_hash",
+          "generator_request_json"
+        ],
+        "title": "RunRecord"
+      },
+      "RunRequest": {
+        "properties": {
+          "scenario_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Scenario Id"
+          },
+          "scenario": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Scenario"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "method": {
+            "$ref": "#/components/schemas/MethodName",
+            "default": "reconsider_lite"
+          },
+          "provider": {
+            "type": "string",
+            "const": "mock",
+            "title": "Provider",
+            "default": "mock"
+          },
+          "seed": {
+            "type": "integer",
+            "title": "Seed",
+            "default": 454491
+          }
+        },
+        "type": "object",
+        "title": "RunRequest"
+      },
+      "Scenario": {
+        "properties": {
+          "schema_version": {
+            "type": "integer",
+            "title": "Schema Version",
+            "default": 1
+          },
+          "scenario_id": {
+            "type": "string",
+            "title": "Scenario Id"
+          },
+          "family_id": {
+            "type": "string",
+            "title": "Family Id"
+          },
+          "version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Version"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "language": {
+            "type": "string",
+            "title": "Language",
+            "default": "en"
+          },
+          "set": {
+            "type": "string",
+            "title": "Set",
+            "default": "core"
+          },
+          "tags": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Tags"
+          },
+          "participant_profile": {
+            "$ref": "#/components/schemas/ParticipantProfile"
+          },
+          "conversation": {
+            "$ref": "#/components/schemas/ConversationInput"
+          },
+          "gold": {
+            "$ref": "#/components/schemas/GoldAnnotations"
+          },
+          "notes": {
+            "$ref": "#/components/schemas/ScenarioNotes"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "scenario_id",
+          "family_id",
+          "version",
+          "title",
+          "participant_profile",
+          "conversation",
+          "gold"
+        ],
+        "title": "Scenario"
+      },
+      "ScenarioNotes": {
+        "properties": {
+          "claim_status": {
+            "type": "string",
+            "title": "Claim Status",
+            "default": "design_hypothesis"
+          },
+          "reviewer_notes": {
+            "type": "string",
+            "title": "Reviewer Notes",
+            "default": ""
+          }
+        },
+        "type": "object",
+        "title": "ScenarioNotes"
+      },
+      "ScopeQualifier": {
+        "properties": {
+          "qualifier_id": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Qualifier Id"
+          },
+          "kind": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Kind"
+          },
+          "text": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Text"
+          },
+          "required_if_used": {
+            "type": "boolean",
+            "title": "Required If Used",
+            "default": true
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "qualifier_id",
+          "kind",
+          "text"
+        ],
+        "title": "ScopeQualifier"
+      },
+      "ScopeStatus": {
+        "type": "string",
+        "enum": [
+          "invalid",
+          "narrowed",
+          "intact"
+        ],
+        "title": "ScopeStatus"
+      },
+      "Sensitivity": {
+        "type": "string",
+        "enum": [
+          "low",
+          "medium",
+          "high"
+        ],
+        "title": "Sensitivity"
+      },
+      "StageLatency": {
+        "properties": {
+          "gates_ms": {
+            "type": "number",
+            "title": "Gates Ms",
+            "default": 0
+          },
+          "deliberation_ms": {
+            "type": "number",
+            "title": "Deliberation Ms",
+            "default": 0
+          },
+          "generation_ms": {
+            "type": "number",
+            "title": "Generation Ms",
+            "default": 0
+          },
+          "validation_ms": {
+            "type": "number",
+            "title": "Validation Ms",
+            "default": 0
+          }
+        },
+        "type": "object",
+        "title": "StageLatency"
+      },
+      "StudyRating": {
+        "properties": {
+          "assignment_id": {
+            "type": "string",
+            "title": "Assignment Id"
+          },
+          "relational_appropriateness": {
+            "type": "integer",
+            "maximum": 7.0,
+            "minimum": 1.0,
+            "title": "Relational Appropriateness"
+          },
+          "helpfulness": {
+            "type": "integer",
+            "maximum": 7.0,
+            "minimum": 1.0,
+            "title": "Helpfulness"
+          },
+          "naturalness": {
+            "type": "integer",
+            "maximum": 7.0,
+            "minimum": 1.0,
+            "title": "Naturalness"
+          },
+          "continuity": {
+            "type": "integer",
+            "maximum": 7.0,
+            "minimum": 1.0,
+            "title": "Continuity"
+          },
+          "feeling_understood": {
+            "type": "integer",
+            "maximum": 7.0,
+            "minimum": 1.0,
+            "title": "Feeling Understood"
+          },
+          "intrusion": {
+            "type": "integer",
+            "maximum": 7.0,
+            "minimum": 1.0,
+            "title": "Intrusion"
+          },
+          "creepiness": {
+            "type": "integer",
+            "maximum": 7.0,
+            "minimum": 1.0,
+            "title": "Creepiness"
+          },
+          "privacy_concern": {
+            "type": "integer",
+            "maximum": 7.0,
+            "minimum": 1.0,
+            "title": "Privacy Concern"
+          },
+          "trust": {
+            "type": "integer",
+            "maximum": 7.0,
+            "minimum": 1.0,
+            "title": "Trust"
+          },
+          "user_agency": {
+            "type": "integer",
+            "maximum": 7.0,
+            "minimum": 1.0,
+            "title": "User Agency"
+          },
+          "rationale": {
+            "type": "string",
+            "maxLength": 1000,
+            "title": "Rationale",
+            "default": ""
+          },
+          "skipped": {
+            "type": "boolean",
+            "title": "Skipped",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "assignment_id",
+          "relational_appropriateness",
+          "helpfulness",
+          "naturalness",
+          "continuity",
+          "feeling_understood",
+          "intrusion",
+          "creepiness",
+          "privacy_concern",
+          "trust",
+          "user_agency"
+        ],
+        "title": "StudyRating"
+      },
+      "StudySession": {
+        "properties": {
+          "session_id": {
+            "type": "string",
+            "title": "Session Id"
+          },
+          "participant_code": {
+            "type": "string",
+            "title": "Participant Code"
+          },
+          "protocol_version": {
+            "type": "string",
+            "title": "Protocol Version"
+          },
+          "consented_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Consented At"
+          },
+          "assignment_seed": {
+            "type": "integer",
+            "title": "Assignment Seed"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status",
+            "default": "active"
+          }
+        },
+        "type": "object",
+        "required": [
+          "session_id",
+          "participant_code",
+          "protocol_version",
+          "consented_at",
+          "assignment_seed"
+        ],
+        "title": "StudySession"
+      },
+      "StudySessionCreate": {
+        "properties": {
+          "adult_eligible": {
+            "type": "boolean",
+            "title": "Adult Eligible"
+          },
+          "consented": {
+            "type": "boolean",
+            "title": "Consented"
+          },
+          "protocol_version": {
+            "type": "string",
+            "title": "Protocol Version"
+          }
+        },
+        "type": "object",
+        "required": [
+          "adult_eligible",
+          "consented",
+          "protocol_version"
+        ],
+        "title": "StudySessionCreate"
+      },
+      "Utility": {
+        "type": "string",
+        "enum": [
+          "none",
+          "weak",
+          "material",
+          "essential"
+        ],
+        "title": "Utility"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      },
+      "ValidatorIssue": {
+        "properties": {
+          "code": {
+            "type": "string",
+            "title": "Code"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          }
+        },
+        "type": "object",
+        "required": [
+          "code",
+          "message"
+        ],
+        "title": "ValidatorIssue"
+      },
+      "Warrant": {
+        "type": "string",
+        "enum": [
+          "absent",
+          "weak",
+          "present",
+          "strong"
+        ],
+        "title": "Warrant"
+      }
+    }
+  }
+}

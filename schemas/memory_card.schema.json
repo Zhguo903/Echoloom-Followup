@@ -1,0 +1,285 @@
+{
+  "$defs": {
+    "CurrentnessState": {
+      "enum": [
+        "current",
+        "superseded",
+        "contradicted",
+        "uncertain"
+      ],
+      "title": "CurrentnessState",
+      "type": "string"
+    },
+    "MemorySource": {
+      "additionalProperties": false,
+      "properties": {
+        "source_type": {
+          "minLength": 1,
+          "title": "Source Type",
+          "type": "string"
+        },
+        "source_id": {
+          "minLength": 1,
+          "title": "Source Id",
+          "type": "string"
+        },
+        "speaker": {
+          "minLength": 1,
+          "title": "Speaker",
+          "type": "string"
+        },
+        "captured_at": {
+          "format": "date-time",
+          "title": "Captured At",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source_type",
+        "source_id",
+        "speaker",
+        "captured_at"
+      ],
+      "title": "MemorySource",
+      "type": "object"
+    },
+    "MemoryType": {
+      "enum": [
+        "personal_fact",
+        "stable_preference",
+        "episodic_experience",
+        "shared_relational_experience",
+        "relationship_state",
+        "milestone",
+        "sensitive_history",
+        "unresolved_issue",
+        "corrected_state",
+        "alternate_context",
+        "model_inference"
+      ],
+      "title": "MemoryType",
+      "type": "string"
+    },
+    "PermissionState": {
+      "enum": [
+        "allowed",
+        "ask_before_use",
+        "forbidden",
+        "deleted"
+      ],
+      "title": "PermissionState",
+      "type": "string"
+    },
+    "ScopeQualifier": {
+      "additionalProperties": false,
+      "properties": {
+        "qualifier_id": {
+          "minLength": 1,
+          "title": "Qualifier Id",
+          "type": "string"
+        },
+        "kind": {
+          "minLength": 1,
+          "title": "Kind",
+          "type": "string"
+        },
+        "text": {
+          "minLength": 1,
+          "title": "Text",
+          "type": "string"
+        },
+        "required_if_used": {
+          "default": true,
+          "title": "Required If Used",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "qualifier_id",
+        "kind",
+        "text"
+      ],
+      "title": "ScopeQualifier",
+      "type": "object"
+    },
+    "Sensitivity": {
+      "enum": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "title": "Sensitivity",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "memory_id": {
+      "minLength": 1,
+      "title": "Memory Id",
+      "type": "string"
+    },
+    "owner_id": {
+      "minLength": 1,
+      "title": "Owner Id",
+      "type": "string"
+    },
+    "character_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Character Id"
+    },
+    "content": {
+      "maxLength": 2000,
+      "minLength": 1,
+      "title": "Content",
+      "type": "string"
+    },
+    "memory_type": {
+      "$ref": "#/$defs/MemoryType"
+    },
+    "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+    },
+    "source": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/MemorySource"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "confidence": {
+      "maximum": 1,
+      "minimum": 0,
+      "title": "Confidence",
+      "type": "number"
+    },
+    "sensitivity": {
+      "$ref": "#/$defs/Sensitivity"
+    },
+    "permission_state": {
+      "$ref": "#/$defs/PermissionState"
+    },
+    "currentness": {
+      "$ref": "#/$defs/CurrentnessState"
+    },
+    "supersedes_memory_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Supersedes Memory Ids",
+      "type": "array"
+    },
+    "superseded_by_memory_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Superseded By Memory Id"
+    },
+    "confirmed_by_user": {
+      "default": true,
+      "title": "Confirmed By User",
+      "type": "boolean"
+    },
+    "is_model_inference": {
+      "default": false,
+      "title": "Is Model Inference",
+      "type": "boolean"
+    },
+    "recent_callback_count": {
+      "default": 0,
+      "minimum": 0,
+      "title": "Recent Callback Count",
+      "type": "integer"
+    },
+    "last_callback_at": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Last Callback At"
+    },
+    "narrative_branch": {
+      "default": "main",
+      "minLength": 1,
+      "title": "Narrative Branch",
+      "type": "string"
+    },
+    "scope_qualifiers": {
+      "items": {
+        "$ref": "#/$defs/ScopeQualifier"
+      },
+      "title": "Scope Qualifiers",
+      "type": "array"
+    },
+    "sanitized_topic": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Sanitized Topic"
+    },
+    "tags": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Tags",
+      "type": "array"
+    },
+    "restrictions": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Restrictions",
+      "type": "array"
+    }
+  },
+  "required": [
+    "memory_id",
+    "owner_id",
+    "content",
+    "memory_type",
+    "created_at",
+    "source",
+    "confidence",
+    "sensitivity",
+    "permission_state",
+    "currentness"
+  ],
+  "title": "MemoryCard",
+  "type": "object"
+}

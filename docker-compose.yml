@@ -1,0 +1,12 @@
+services:
+  app:
+    build: .
+    ports: ["8000:8000"]
+    environment:
+      BBI_DEFAULT_PROVIDER: mock
+      BBI_DEFAULT_MODEL: mock-v1
+      BBI_STUDY_MODE: "false"
+      BBI_ADMIN_TOKEN: change-me-locally
+    volumes:
+      - ./var:/app/var
+

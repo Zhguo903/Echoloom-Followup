@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "scenario_id": "golden_no_memory_v1",
+  "family_id": "no_memory_best",
+  "version": 1,
+  "title": "No memory is sufficient",
+  "language": "en",
+  "set": "golden",
+  "tags": [
+    "low_value_personalization",
+    "no_memory_best"
+  ],
+  "participant_profile": {
+    "profile_id": "synthetic_profile_08",
+    "description": "Adult user in a fully synthetic companion scenario."
+  },
+  "conversation": {
+    "conversation_id": "synthetic_conversation_08",
+    "owner_id": "user_demo_001",
+    "character_id": "echo_character_001",
+    "active_branch": "main",
+    "current_message": "How many minutes should I boil an egg?",
+    "recent_turns": [],
+    "callback_history": [],
+    "candidate_memories": [
+      {
+        "schema_version": 1,
+        "memory_id": "mem_blue_scarf",
+        "owner_id": "user_demo_001",
+        "character_id": "echo_character_001",
+        "content": "The user likes blue scarves.",
+        "memory_type": "stable_preference",
+        "created_at": "2026-03-20T18:15:00Z",
+        "source": {
+          "source_type": "synthetic_user_message",
+          "source_id": "source_mem_blue_scarf",
+          "speaker": "user",
+          "captured_at": "2026-03-20T18:15:00Z"
+        },
+        "confidence": 1.0,
+        "sensitivity": "low",
+        "permission_state": "allowed",
+        "currentness": "current",
+        "supersedes_memory_ids": [],
+        "superseded_by_memory_id": null,
+        "confirmed_by_user": true,
+        "is_model_inference": false,
+        "recent_callback_count": 0,
+        "last_callback_at": null,
+        "narrative_branch": "main",
+        "scope_qualifiers": [],
+        "sanitized_topic": null,
+        "tags": [
+          "low_value",
+          "no_memory_best"
+        ],
+        "restrictions": []
+      }
+    ]
+  },
+  "gold": {
+    "beneficial_memory_ids": [],
+    "harmful_or_forbidden_memory_ids": [],
+    "acceptable_actions": {
+      "mem_blue_scarf": [
+        "ignore"
+      ]
+    },
+    "required_qualifiers": {},
+    "expected_failure_tags": [
+      "low_value_personalization",
+      "no_memory_best"
+    ],
+    "canary_terms": {}
+  },
+  "notes": {
+    "claim_status": "design_hypothesis",
+    "reviewer_notes": "Synthetic evaluation fixture; multiple actions may be acceptable."
+  }
+}

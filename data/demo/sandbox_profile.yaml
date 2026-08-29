@@ -1,0 +1,7 @@
+profile_id: synthetic_ai_companion_user_01
+character_id: echo_character_001
+character_name: Echo
+fictional: true
+active_branch: main
+warning: "Synthetic local demo only; not a real companion relationship."
+

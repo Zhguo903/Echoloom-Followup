@@ -1,0 +1,168 @@
+{
+  "$defs": {
+    "Admission": {
+      "enum": [
+        "use",
+        "do_not_use",
+        "ask_permission"
+      ],
+      "title": "Admission",
+      "type": "string"
+    },
+    "DeliberationDecision": {
+      "additionalProperties": false,
+      "properties": {
+        "memory_id": {
+          "title": "Memory Id",
+          "type": "string"
+        },
+        "utility": {
+          "$ref": "#/$defs/Utility"
+        },
+        "warrant": {
+          "$ref": "#/$defs/Warrant"
+        },
+        "scope_status": {
+          "$ref": "#/$defs/ScopeStatus"
+        },
+        "admission": {
+          "$ref": "#/$defs/Admission"
+        },
+        "allowed_content": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Allowed Content"
+        },
+        "preserved_qualifier_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Preserved Qualifier Ids",
+          "type": "array"
+        },
+        "sensitivity": {
+          "$ref": "#/$defs/Sensitivity"
+        },
+        "expression": {
+          "$ref": "#/$defs/Expression"
+        },
+        "priority_tier": {
+          "$ref": "#/$defs/PriorityTier"
+        },
+        "sanitized_permission_topic": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Sanitized Permission Topic"
+        },
+        "brief_rationale": {
+          "maxLength": 320,
+          "title": "Brief Rationale",
+          "type": "string"
+        }
+      },
+      "required": [
+        "memory_id",
+        "utility",
+        "warrant",
+        "scope_status",
+        "admission",
+        "sensitivity",
+        "expression",
+        "priority_tier",
+        "brief_rationale"
+      ],
+      "title": "DeliberationDecision",
+      "type": "object"
+    },
+    "Expression": {
+      "enum": [
+        "none",
+        "implicit",
+        "explicit",
+        "ask_first"
+      ],
+      "title": "Expression",
+      "type": "string"
+    },
+    "PriorityTier": {
+      "enum": [
+        "optional",
+        "material",
+        "essential"
+      ],
+      "title": "PriorityTier",
+      "type": "string"
+    },
+    "ScopeStatus": {
+      "enum": [
+        "invalid",
+        "narrowed",
+        "intact"
+      ],
+      "title": "ScopeStatus",
+      "type": "string"
+    },
+    "Sensitivity": {
+      "enum": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "title": "Sensitivity",
+      "type": "string"
+    },
+    "Utility": {
+      "enum": [
+        "none",
+        "weak",
+        "material",
+        "essential"
+      ],
+      "title": "Utility",
+      "type": "string"
+    },
+    "Warrant": {
+      "enum": [
+        "absent",
+        "weak",
+        "present",
+        "strong"
+      ],
+      "title": "Warrant",
+      "type": "string"
+    }
+  },
+  "properties": {
+    "schema_version": {
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "decisions": {
+      "items": {
+        "$ref": "#/$defs/DeliberationDecision"
+      },
+      "title": "Decisions",
+      "type": "array"
+    }
+  },
+  "required": [
+    "decisions"
+  ],
+  "title": "DeliberationBundle",
+  "type": "object"
+}

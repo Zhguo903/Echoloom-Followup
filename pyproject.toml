@@ -1,0 +1,37 @@
+[tool.uv.workspace]
+members = ["backend"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+ignore = ["B008", "E501"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+packages = ["bbi"]
+mypy_path = "backend/src"
+plugins = ["pydantic.mypy"]
+
+[[tool.mypy.overrides]]
+module = ["sklearn.*"]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["backend/tests"]
+asyncio_mode = "auto"
+addopts = "--cov=bbi --cov-report=term-missing --cov-fail-under=70"
+
+[tool.coverage.run]
+omit = [
+  "*/bbi/api/*",
+  "*/bbi/cli/*",
+  "*/bbi/providers/anthropic_provider.py",
+  "*/bbi/providers/gemini_provider.py",
+  "*/bbi/providers/openai_compatible.py",
+  "*/bbi/storage/*",
+  "*/bbi/study/*",
+]

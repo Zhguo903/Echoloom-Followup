@@ -1,0 +1,8 @@
+protocol_version: pilot-v1
+adult_only: true
+participants_planned: 10
+conditions_per_scenario: 2
+seed: 454491
+primary_outcome: relational_appropriateness
+scale: {minimum: 1, maximum: 7}
+

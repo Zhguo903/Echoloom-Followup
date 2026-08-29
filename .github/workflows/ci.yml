@@ -1,0 +1,55 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with: { python-version: "3.12", enable-cache: true }
+      - uses: actions/setup-node@v4
+        with: { node-version: "24", cache: pnpm }
+      - run: corepack enable
+      - run: uv sync --all-extras --frozen
+      - run: pnpm install --frozen-lockfile
+      - run: uv run bbi scenario-lint data/scenarios
+      - run: uv run python scripts/secret_scan.py
+      - run: uv run ruff check backend analysis research scripts
+      - run: uv run mypy
+      - run: uv run pytest --cov-report=xml
+      - run: pnpm --dir frontend lint
+      - run: pnpm --dir frontend typecheck
+      - run: pnpm --dir frontend test
+      - run: uv run python scripts/export_openapi.py && git diff --exit-code frontend/src/api/openapi.json
+      - run: pnpm --dir frontend build
+      - uses: actions/upload-artifact@v4
+        with: { name: test-reports, path: coverage.xml }
+
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with: { python-version: "3.12" }
+      - uses: actions/setup-node@v4
+        with: { node-version: "24" }
+      - run: corepack enable && uv sync --all-extras --frozen && pnpm install --frozen-lockfile
+      - run: pnpm --dir frontend exec playwright install --with-deps chromium
+      - run: pnpm --dir frontend exec playwright test --project desktop-chromium
+
+  synthetic-eval-and-docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with: { python-version: "3.12" }
+      - run: uv sync --all-extras --frozen
+      - run: uv run bbi run --config configs/eval_mock.yaml
+      - uses: actions/upload-artifact@v4
+        with: { name: mock-evaluation-summary, path: results/mock_core_v1 }
+      - run: docker build -t before-bringing-it-up:test .
+

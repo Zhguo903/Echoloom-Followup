@@ -1,0 +1,40 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "reply": {
+      "maxLength": 2000,
+      "minLength": 1,
+      "title": "Reply",
+      "type": "string"
+    },
+    "used_memory_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Used Memory Ids",
+      "type": "array"
+    },
+    "explicit_memory_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Explicit Memory Ids",
+      "type": "array"
+    },
+    "qualifier_acknowledgements": {
+      "additionalProperties": {
+        "items": {
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "title": "Qualifier Acknowledgements",
+      "type": "object"
+    }
+  },
+  "required": [
+    "reply"
+  ],
+  "title": "GeneratorOutput",
+  "type": "object"
+}

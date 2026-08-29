@@ -1,0 +1,13 @@
+cff-version: 1.2.0
+message: "Please contact the authors before citing; publication status is pending."
+title: "Before Bringing It Up: Reconsider-Lite"
+type: software
+version: 0.1.0
+date-released: 2026-08-28
+authors:
+  - family-names: Guo
+    given-names: Saria
+  - family-names: He
+    given-names: Roxy
+license: LicenseRef-Proprietary
+

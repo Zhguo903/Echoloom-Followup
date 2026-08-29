@@ -1,0 +1,33 @@
+campaign_id: mock_core_v1
+scenario_paths:
+  - data/scenarios/golden
+  - data/scenarios/core
+methods:
+  - no_memory
+  - similarity_top_k
+  - one_pass_selective
+  - relevance_two_pass
+  - reconsider_lite
+  - no_physical_separation
+provider:
+  name: mock
+  model: mock-v1
+run:
+  repetitions: 1
+  temperature: 0.0
+  max_output_tokens: 260
+  timeout_seconds: 45
+  seed: 454491
+  similarity_k: 2
+  max_admitted_memories: 3
+  max_explicit_callbacks: 1
+order_stability:
+  enabled: true
+  permutations_per_scenario: 3
+  scenario_subset_tag: candidate_order_stress
+judging:
+  deterministic: true
+  gold_action_sets: true
+  optional_llm_judge: false
+output_dir: results/mock_core_v1
+

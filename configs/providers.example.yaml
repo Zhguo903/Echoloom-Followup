@@ -1,0 +1,5 @@
+mock: {model: mock-v1, requires_key: false}
+openai_compatible: {base_url_env: OPENAI_BASE_URL, api_key_env: OPENAI_API_KEY, model_env: OPENAI_MODEL}
+anthropic: {api_key_env: ANTHROPIC_API_KEY, model_env: ANTHROPIC_MODEL}
+gemini: {api_key_env: GEMINI_API_KEY, model_env: GEMINI_MODEL}
+

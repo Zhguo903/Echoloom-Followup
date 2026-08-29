@@ -1,0 +1,11 @@
+campaign_id: portability_example_v1
+scenario_paths: [data/scenarios/portability]
+methods: [reconsider_lite, no_physical_separation]
+providers:
+  - {name: openai_compatible, model: configure-model-id}
+  - {name: anthropic, model: configure-model-id}
+  - {name: gemini, model: configure-model-id}
+run: {repetitions: 1, temperature: 0.0, max_output_tokens: 260, timeout_seconds: 45, seed: 454491, similarity_k: 2, max_admitted_memories: 3, max_explicit_callbacks: 1}
+output_dir: results/portability_example_v1
+notes: "Exploratory only. Report each provider separately and record unsupported seed/schema settings."
+
