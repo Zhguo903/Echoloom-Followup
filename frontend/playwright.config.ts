@@ -18,7 +18,7 @@ export default defineConfig({
   ],
   webServer: [
     {
-      command: 'python3 -m uv run uvicorn bbi.api.main:app --host 127.0.0.1 --port 8000',
+      command: 'uv run uvicorn bbi.api.main:app --host 127.0.0.1 --port 8000',
       cwd: '..',
       url: 'http://127.0.0.1:8000/health',
       reuseExistingServer: true,
