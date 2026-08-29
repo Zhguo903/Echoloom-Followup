@@ -1,0 +1,306 @@
+<title>EchoLoom 标志优化</title>
+<style>
+  :root {
+    --ink: #191033;
+    --ink-soft: #5b5270;
+    --indigo: #4f46e5;
+    --violet: #9333ea;
+    --rose: #f0679b;
+    --paper: #fdf2f5;
+    --paper-card: #ffffff;
+    --hair: rgba(25, 16, 51, 0.1);
+    --shadow: rgba(79, 70, 229, 0.18);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ink: #f4eefb;
+      --ink-soft: #b6acc9;
+      --paper: #140e24;
+      --paper-card: #1c1433;
+      --hair: rgba(244, 238, 251, 0.12);
+      --shadow: rgba(0, 0, 0, 0.45);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ink: #f4eefb;
+    --ink-soft: #b6acc9;
+    --paper: #140e24;
+    --paper-card: #1c1433;
+    --hair: rgba(244, 238, 251, 0.12);
+    --shadow: rgba(0, 0, 0, 0.45);
+  }
+  :root[data-theme="light"] {
+    --ink: #191033;
+    --ink-soft: #5b5270;
+    --paper: #fdf2f5;
+    --paper-card: #ffffff;
+    --hair: rgba(25, 16, 51, 0.1);
+    --shadow: rgba(79, 70, 229, 0.18);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Poppins', 'Century Gothic', 'Avenir Next', -apple-system, 'Segoe UI', sans-serif;
+    padding: 4rem 1.5rem 6rem;
+  }
+  main {
+    max-width: 760px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 3.5rem;
+  }
+  .eyebrow {
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    font-weight: 600;
+  }
+  h1 { font-size: 1.6rem; margin: 0.35rem 0 0; text-wrap: balance; }
+  p { color: var(--ink-soft); line-height: 1.65; margin: 0.6rem 0 0; max-width: 58ch; }
+
+  /* ---- hero ---- */
+  .hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1.4rem;
+    padding: 3rem 1rem 2.5rem;
+    position: relative;
+  }
+  .hero::before {
+    content: "";
+    position: absolute;
+    inset: -2rem;
+    background: radial-gradient(closest-side, var(--shadow), transparent 70%);
+    opacity: 0.55;
+    z-index: 0;
+    border-radius: 50%;
+  }
+  .mark-tile {
+    position: relative;
+    z-index: 1;
+    width: 148px;
+    height: 148px;
+    border-radius: 34px;
+    background: var(--paper-card);
+    box-shadow: 0 18px 40px -18px var(--shadow), 0 1px 0 var(--hair) inset;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .mark-tile svg { width: 92px; height: 92px; }
+  .wordmark {
+    position: relative;
+    z-index: 1;
+    font-size: 2.1rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .tagline { font-size: 0.92rem; }
+
+  /* ---- section shell ---- */
+  section.block {
+    border-top: 1px solid var(--hair);
+    padding-top: 1.8rem;
+  }
+  .block h2 { font-size: 1rem; margin: 0.3rem 0 1.1rem; font-weight: 600; }
+
+  /* ---- size preview ---- */
+  .sizes {
+    display: flex;
+    align-items: flex-end;
+    gap: 2.2rem;
+    flex-wrap: wrap;
+    overflow-x: auto;
+    padding-bottom: 0.3rem;
+  }
+  .size-cell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .size-cell .swatch {
+    background: var(--paper-card);
+    border-radius: 22%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 20px -12px var(--shadow);
+  }
+  .size-cell span {
+    font-size: 0.72rem;
+    color: var(--ink-soft);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ---- theme swatches (fixed, not tied to viewer theme) ---- */
+  .theme-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  .swatch-card {
+    border-radius: 20px;
+    padding: 2rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.9rem;
+  }
+  .swatch-card.light { background: #fdf2f5; }
+  .swatch-card.dark { background: #140e24; }
+  .swatch-card svg { width: 56px; height: 56px; }
+  .swatch-card .lock-word { font-size: 1.15rem; font-weight: 600; letter-spacing: -0.01em; }
+  .swatch-card.light .lock-word { color: #191033; }
+  .swatch-card.dark .lock-word { color: #f4eefb; }
+  .swatch-card small { font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; }
+  .swatch-card.light small { color: #8b81a0; }
+  .swatch-card.dark small { color: #7c7292; }
+
+  /* ---- lockup variants ---- */
+  .lockups {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .lockup-card {
+    flex: 1 1 220px;
+    background: var(--paper-card);
+    border-radius: 18px;
+    padding: 1.6rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.9rem;
+    box-shadow: 0 1px 0 var(--hair) inset;
+    min-height: 140px;
+  }
+  .lockup-card.horizontal { flex-direction: row; }
+  .lockup-card svg.icon-sm { width: 44px; height: 44px; flex: none; }
+  .lockup-card .word { font-size: 1.5rem; font-weight: 600; }
+  .lockup-card small { font-size: 0.68rem; letter-spacing: 0.1em; color: var(--ink-soft); text-transform: uppercase; }
+  .lockup-inner { display: flex; flex-direction: column; align-items: center; gap: 0.9rem; }
+  .lockup-card.horizontal .lockup-inner { flex-direction: row; }
+
+  /* ---- notes ---- */
+  ul.notes { margin: 0; padding-left: 1.2rem; color: var(--ink-soft); line-height: 1.75; }
+  ul.notes li::marker { color: var(--violet); }
+
+  footer {
+    text-align: center;
+    font-size: 0.75rem;
+    color: var(--ink-soft);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .hero { animation: rise 0.5s ease-out; }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  }
+</style>
+
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <linearGradient id="flow" x1="18" y1="14" x2="82" y2="90" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#4f46e5" />
+      <stop offset="52%" stop-color="#9333ea" />
+      <stop offset="100%" stop-color="#f0679b" />
+    </linearGradient>
+    <symbol id="mark" viewBox="0 0 100 100">
+      <path d="M 25.75,41 A 28,28 0 1,1 25.75,69" fill="none" stroke="url(#flow)" stroke-width="9" stroke-linecap="round" />
+      <path d="M 74.25,59 A 28,28 0 1,1 74.25,31" fill="none" stroke="url(#flow)" stroke-width="9" stroke-linecap="round" />
+      <path d="M44,79 C40,85 36,90 33,93 C40,90 47,85 51,79 Z" fill="#f0679b" />
+      <path d="M50,38 L54,46 L62,50 L54,54 L50,62 L46,54 L38,50 L46,46 Z" fill="#ffffff" />
+    </symbol>
+  </defs>
+</svg>
+
+<main>
+  <div class="hero">
+    <div class="mark-tile"><svg><use href="#mark" /></svg></div>
+    <div class="wordmark">EchoLoom</div>
+    <p class="tagline">编织每一段对话的回声 — AI 对话助手标志优化方案</p>
+  </div>
+
+  <section class="block">
+    <span class="eyebrow">变更说明</span>
+    <h2>相比原版调整了什么</h2>
+    <ul class="notes">
+      <li>把原来交叠含糊的丝带结构，收成两条方向相反、开口互补的环，缠绕关系更清楚，小尺寸下不会糊成一团。</li>
+      <li>渐变从靛蓝到玫紫的过渡拉直成一条对角线，色彩在图标任何尺寸下都保持同一走向，不再局部脱节。</li>
+      <li>中心的四角星简化为纯直线切角，去掉了原来偏软的曲线尖角，屏幕上锐利很多。</li>
+      <li>对话尾巴独立出来用纯玫瑰色实心填充，避免跟渐变环重叠时糊边，16px 图标下依然认得出是聊天气泡。</li>
+    </ul>
+  </section>
+
+  <section class="block">
+    <span class="eyebrow">多尺寸预览</span>
+    <h2>从图标到 favicon</h2>
+    <div class="sizes" id="sizes"></div>
+  </section>
+
+  <section class="block">
+    <span class="eyebrow">明暗背景</span>
+    <h2>双主题适配</h2>
+    <div class="theme-row">
+      <div class="swatch-card light">
+        <svg viewBox="0 0 100 100"><use href="#mark" /></svg>
+        <div class="lock-word">EchoLoom</div>
+        <small>Light</small>
+      </div>
+      <div class="swatch-card dark">
+        <svg viewBox="0 0 100 100"><use href="#mark" /></svg>
+        <div class="lock-word">EchoLoom</div>
+        <small>Dark</small>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <span class="eyebrow">组合方式</span>
+    <h2>标志组合</h2>
+    <div class="lockups">
+      <div class="lockup-card">
+        <div class="lockup-inner">
+          <svg class="icon-sm" viewBox="0 0 100 100"><use href="#mark" /></svg>
+          <div class="word">EchoLoom</div>
+        </div>
+        <small>竖排组合</small>
+      </div>
+      <div class="lockup-card horizontal">
+        <div class="lockup-inner">
+          <svg class="icon-sm" viewBox="0 0 100 100"><use href="#mark" /></svg>
+          <div class="word">EchoLoom</div>
+        </div>
+        <small>横排组合</small>
+      </div>
+    </div>
+  </section>
+
+  <footer>EchoLoom · 标志优化方案 · 矢量 SVG，可无损缩放</footer>
+</main>
+
+<script>
+  var sizes = [96, 64, 40, 24, 16];
+  var wrap = document.getElementById('sizes');
+  sizes.forEach(function (s) {
+    var cell = document.createElement('div');
+    cell.className = 'size-cell';
+    var pad = Math.round(s * 0.28);
+    cell.innerHTML =
+      '<div class="swatch" style="width:' + (s + pad) + 'px;height:' + (s + pad) + 'px;">' +
+      '<svg width="' + s + '" height="' + s + '" viewBox="0 0 100 100"><use href="#mark" /></svg>' +
+      '</div><span>' + s + 'px</span>';
+    wrap.appendChild(cell);
+  });
+</script>
